@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>PubNub Color Changing Pirate Duck Demo</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+        <style>
+                @font-face {
+                    font-family: "AmaticSC";
+                    src: url("fonts/AmaticSC-Regular.ttf");
+                }
+                @font-face {
+                    font-family: "ProximaNova-Regular";
+                    src: url("fonts/ProximaNova-Regular.otf")
+                }
+                @font-face {
+                    font-family: "ProximaNova-Semibold";
+                    src: url("fonts/ProximaNova-Semibold.otf")
+                }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="marketing">
+                <header class="marketing-header"><img src="images/pb_logo.png" width="366px" height="80 px" alt="PubNub logo"></header>
+                <aside class="marketing-aside">
+                    <p>PubNub powers realtime connected experiences.</p>
+
+                    <p>Send messages to millions of your connected users around the world in 250ms.</p>   
+                    <p><a href="https://www.pubnub.com">Learn more</a></p>
+                    <img src="">
+
+                    <p><a href="https://bit.ly/someurl">https://bit.ly/someurl</a></p>
+                </aside>
+            </div>
+            <article>
+                <h2 class="demo-header">
+                    Demo: Pirate duck chat
+                </h2>
+                <p class="ducks-status" id="js-duck-status">
+                    Normally there would controls for changing colors. It appears either that javascript is not enabled or that there is a problem loading our connections.
+                </p>
+                <div class="buttons-area" id="js-buttons-area" hidden=true>
+                    <div id="buttons-area__text-buttons">
+                        <button class="button button__publish-text js-publish-button" id="js-button__publish-text--1" data-type="text" data-text="If it quacks like a duck, is it a duck?" onclick="handleButtonClick(this)">"Quacks…"</button>
+                        <button class="button button__publish-text js-publish-button" id="js-button__publish-text--2" data-type="text" data-text="A duck without Ahab is just a duck." onclick="handleButtonClick(this)">"A duck…"</button>
+                        <button class="button button__publish-text js-publish-button" data-type="text" data-text="Woof!" onclick="handleButtonClick(this)">"Woof!"</button>            
+                    </div>  
+                    <div id="buttons-area__color-buttons">
+                        <button class="button button__publish-color button__color--red js-publish-button" data-type="color" data-text="#D02129" onclick="handleButtonClick(this)">Red</button>
+                        <button class="button button__publish-color button__color--blue js-publish-button" data-type="color" data-text="#4421D0" onclick="handleButtonClick(this)">Blue</button>
+                        <button class="button button__publish-color button__color--yellow js-publish-button" data-type="color" data-text="#FECE53" onclick="handleButtonClick(this)">Yellow</button>
+                    </div>
+                </div>
+                <div id="duck-area">
+                    <div id="duck-area__top">
+                        <div class="duck-speech">
+                            <div class="duck-speech__who" id="js-duck-speech__who">
+                                A duck said:
+                            </div>
+                            <div class="duck-speech__what" id="js-duck-speech__what">
+                                Hello from PubNub!
+                            </div>
+                        </div>  
+                        <div id="duck-image">
+                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="263" height="222"  xml:space="preserve" id="js-pirate-duck">
+                                <g id="pirate-duck__body">
+                                    <path class="pirate-duck__body-parts js-pirate-duck" fill-rule="evenodd" stroke="none" fill="rgb(0, 0, 0)" d="M 188.03,94.15 C 176.79,107.73 157.65,116.68 135.91,116.68 131.82,116.68 127.83,116.36 123.96,115.76 120.64,115.24 118.09,112.95 117.22,109.71 116.35,106.46 117.42,103.2 120.04,101.1 130.79,92.46 137.67,79.21 137.67,64.34 137.67,38.3 116.54,17.19 90.47,17.19 69.65,17.19 51.99,35.18 45.72,52.08 L 29,44.97 C 27,44.12 24.89,44.32 23.09,45.53 21.29,46.74 20.3,48.61 20.33,50.78 20.41,57.19 23.07,62.97 27.31,67.15 26.03,67.34 24.84,67.9 23.86,68.88 22.29,70.47 21.7,72.58 22.23,74.75 23.7,80.72 32.56,85.31 43.28,85.31 45.16,85.31 46.98,85.15 48.72,84.89 50.24,87.08 51.98,88.96 53.79,90.84 54.8,91.89 55.17,93.26 54.84,94.68 54.5,96.1 53.54,97.15 52.17,97.64 7.34,113.31 -9.3,198.81 101.3,198.81 143.91,198.81 201.21,179.57 201.21,128.21 201.21,115.1 196.22,103.14 188.03,94.15 Z M 66.9,48.81 C 63.43,53.63 58.78,56.22 56.51,54.58 54.25,52.95 55.22,47.72 58.69,42.9 62.16,38.08 66.81,35.5 69.08,37.13 71.35,38.75 70.37,43.99 66.9,48.81 Z M 66.9,48.81" />
+                                    <ellipse class="pirate-duck__body-parts js-pirate-duck" stroke="none" fill="rgb(0, 0, 0)" cx="-0" cy="-0" rx="2.59" ry="5.6"  transform="translate(60.75, 50.53) rotate(35.7)" />
+                                </g>
+                                <path class="pirate-duck__body-parts js-pirate-duck" id="js-pirate-duck__flag" fill-rule="evenodd" stroke="none" fill="rgb(0, 0, 0)" d="M 171.12,30.42 C 171.95,30.12 172.87,29.81 173.89,29.51 185.83,25.93 198.61,25.93 210.64,31.95 221.35,37.3 232.84,37.3 243.64,34.06 245.22,33.59 246.63,33.08 247.86,32.58 248.58,32.28 249.07,32.06 249.3,31.95 251,31.1 253,32.33 253,34.24 L 253,89.25 C 253,90.22 252.45,91.11 251.59,91.54 250.32,92.17 248.1,93.08 245.11,93.98 233.17,97.56 220.39,97.56 208.36,91.54 197.65,86.19 186.16,86.19 175.36,89.43 173.78,89.9 172.37,90.4 171.14,90.91 L 171.12,90.92 171.12,108.44 C 171.12,109.85 169.97,111 168.56,111 167.15,111 166,109.85 166,108.44 L 166,26.56 C 166,25.15 167.15,24 168.56,24 169.97,24 171.12,25.15 171.12,26.56 L 171.12,30.42 Z M 171.12,85.43 C 171.95,85.13 172.87,84.83 173.89,84.52 185.83,80.94 198.61,80.94 210.64,86.96 221.35,92.31 232.84,92.31 243.64,89.07 245.22,88.6 246.63,88.1 247.86,87.59 247.87,87.59 247.87,71.08 247.88,38.05 247.05,38.35 246.13,38.66 245.11,38.96 233.17,42.54 220.39,42.54 208.36,36.52 197.65,31.17 186.16,31.17 175.36,34.41 173.78,34.88 172.37,35.39 171.14,35.89 171.13,35.89 171.13,52.41 171.12,85.43 Z M 215.22,71.34 L 220.88,74.17 C 222.14,74.8 222.66,76.34 222.02,77.6 221.39,78.86 219.85,79.38 218.59,78.74 L 209.5,74.2 200.41,78.74 C 197.36,80.27 195.07,75.69 198.12,74.17 L 203.78,71.34 198.12,68.51 C 196.86,67.88 196.34,66.34 196.98,65.08 197.61,63.81 199.15,63.3 200.41,63.93 L 209.5,68.48 218.59,63.93 C 221.64,62.41 223.93,66.98 220.88,68.51 L 215.22,71.34 Z M 209.5,62.38 C 204.55,62.38 200.54,58.37 200.54,53.43 200.54,48.48 204.55,44.47 209.5,44.47 214.45,44.47 218.46,48.48 218.46,53.43 218.46,58.37 214.45,62.38 209.5,62.38 Z M 209.5,57.26 C 211.62,57.26 213.34,55.55 213.34,53.43 213.34,51.31 211.62,49.59 209.5,49.59 207.38,49.59 205.66,51.31 205.66,53.43 205.66,55.55 207.38,57.26 209.5,57.26 Z M 209.5,57.26" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="duck-area__meta" id="js-duck-area__meta">
+                        <p class="duck-meta-part duck-meta_part__header" id="js-duck-meta_part__header">
+                            About #TheRaft
+                        </p>
+                        <p class="duck-meta-part duck-meta-part__count" id="js-duck-meta-part__count" aria-live="polite">
+                        </p>      
+                        <p class="duck-meta-part duck-meta-part__name" id="js-duck-meta-part__name" aria-live="polite">
+                        </p>
+                        <p class="duck-meta-part duck-meta-part__talk" id="js-duck-meta-part__talk" aria-live="polite">
+                        </p>
+                        <p class="duck-meta-part duck-meta-part__color" id="js-duck-meta-part__color" aria-live="polite">
+                        </p>
+                        <p class="duck-meta-part duck-meta-part__dance" id="js-duck-meta-part__dance" aria-live="polite">
+                        </p>
+                        <p class="duck-meta-part duck-meta-part__log-link" id="js-duck-meta-part__log-link">
+                            <a class="message-log__trigger-link" id="js-message-log__trigger-link"  onclick="showLogOverlay()">Show message log</a>
+                        </p>
+        
+                    </div>
+                </div>
+            </article>
+         </div>
+         <div class="message-log__overlay" id="js-message-log__overlay">
+            <span class="helper"></span>
+            <div>
+                <div class="message_log__close-button" id="js-message-log__close-button" onclick="hideLogOverlay()">X</div>
+                <textarea class="message-log__text-area" id="js-message-log__text-area"></textarea>
+            </div>
+        </div>
+
+        <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.24.2.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="js/index.js"></script>
+    </body>
+</html>
+
+<!-- Copyright 2019, Mark D. F. Williams, All rights reserved. -->
+
+<!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
+<!-- https://medium.com/@aniboaz/animate-svg-4fa7dd00e860 -->
+<!-- https://github.com/jakearchibald/svgomg/blob/master/README.md -->
+<!-- How to create a simple CSS loading spinner & make it accessible https://codeburst.io/how-to-create-a-simple-css-loading-spinner-make-it-accessible-e5c83c2e464c -->
+<!--https://css-tricks.com/accessible-svgs/-->
+<!--https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions-->
+<!-- https://html-online.com/articles/simple-popup-box/ -->
