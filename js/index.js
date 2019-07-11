@@ -25,7 +25,7 @@ $(document).ready(function(){
         sendMessageToPubNub ("bots.ducks", "send:", "now" );
     }, 30000);
     */
-    setRandomMessages();
+   setMessagesOnButtons();
     generatedDuckName = randomName();
     updateDuckMetaName(generatedDuckName);
     updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
@@ -59,6 +59,42 @@ $(document).ready(function(){
 });
 
 /* PubNub functions */
+
+function processStatusEvent(statusEvent) {
+    logReceivedMessage(statusEvent, "a status event");
+    if (statusEvent.category === "PNDisconnectedCategory" || statusEvent.category === "PNTimeoutCategory" || statusEvent.category === "PNNetworkIssuesCategory" || statusEvent.category === "PNNetworkDownCategory") {
+        hideChangeInterface();
+        updateDuckStatus("<i>Internet connection is not available. The duck is sad.</i>");
+    }
+    if (statusEvent.category === "PNConnectedCategory" || statusEvent.category === "PNNetworkUpCategory") {
+        showChangeInterface();
+        requestHereNow();
+        requestHistory();
+    }
+}
+
+function requestHereNow() {
+    pubnub.hereNow(
+        {
+            channels: [CHANNEL_NAME_TALK],
+            includeUUIDs: false,
+            includeState: false
+        },
+        function (status, response) {
+            if (status.error === false) {
+                processHereNowResponse(response);
+            }
+        }
+    );
+}
+
+function processHereNowResponse(message) {
+    var totalOccupants = message.totalOccupancy;
+    if (totalOccupants && totalOccupants > -1) {
+        updateConnectedDuckCount(totalOccupants);
+        logReceivedMessage(message, "a hereNow (presence) update");
+    }
+}
 
 function requestHistory() {
     pubnub.history(
@@ -95,42 +131,6 @@ function requestHistory() {
             }
         }
     );
-}
-
-function requestHereNow() {
-    pubnub.hereNow(
-        {
-            channels: [CHANNEL_NAME_TALK],
-            includeUUIDs: false,
-            includeState: false
-        },
-        function (status, response) {
-            if (status.error === false) {
-                processHereNowResponse(response);
-            }
-        }
-    );
-}
-
-function processHereNowResponse(message) {
-    var totalOccupants = message.totalOccupancy;
-    if (totalOccupants && totalOccupants > -1) {
-        updateConnectedDuckCount(totalOccupants);
-        logReceivedMessage(message, "a hereNow (presence) update");
-    }
-}
-
-function processStatusEvent(statusEvent) {
-    logReceivedMessage(statusEvent, "a status event");
-    if (statusEvent.category === "PNDisconnectedCategory" || statusEvent.category === "PNTimeoutCategory" || statusEvent.category === "PNNetworkIssuesCategory" || statusEvent.category === "PNNetworkDownCategory") {
-        hideChangeInterface();
-        updateDuckStatus("<i>Internet connection is not available. The duck is sad.</i>");
-    }
-    if (statusEvent.category === "PNConnectedCategory" || statusEvent.category === "PNNetworkUpCategory") {
-        showChangeInterface();
-        requestHereNow();
-        requestHistory();
-    }
 }
 
 function processPresenceEvent(message) {
