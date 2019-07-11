@@ -1,9 +1,27 @@
-For this, we will excersize the following aspects of PubNub's real-time infrastructure:
-* Subscribing to, sending and receiving messages on 2 different channels for signalling realtime text and color changes (3 as part of making the ducks dance)
-* HereNow and Presence functionality to get the number of connected ducks
-* History functionality for updating state when reconnecting
-* Dealing with network failures and timeouts
-* "Before Publish" PubNub Function to simulate bad word filtering (Separate article: "title")
-* "On Request" API Endpoint style PubNub Function to allow us to interact with the pirate duck army from Slack (Separate article: "title")
-* "After Publish" PubNub Function and KV Store to track recent actions and react by making the ducks dance and wiggle. (Separate article: "title")
-* How to make an arduino duck respond
+A Chat Demo using color changing, dancing, Pirate ducks with PubNub for realtime backend infrastructure and PubNub functions for some of the fun parts. Arrr. 
+============
+
+Features:
+- Multiple PubNub channels for chat, color changing, dancing and bot pirate integration.
+- PubNub HereNow and Presence functionaility to get the number of connected ducks.
+- PubNub history funcionality for updating state when reconnecting.
+- How to handle PubNub network events.
+- Using PubNub Functions for:
+  - "Before Publish" function to simulate bad word filtering.
+  - "After Publish" function and PubNub's KV Store to track recent actions and react by making the ducks dance and wiggle.
+  - "After Publish" function to simulate extra duck chat inhabitants.
+  - "On Request" API Enpoint function to allow interactions with the pirate duck chat from external sources. {not complete}
+
+---
+## Credits
+Pirate Duck Chat is maintained by Mark Williams
+
+---
+## License
+
+---
+## Acknowledgements
+* Uses ["Duck" by Nikita Kozin](https://thenounproject.com/icon/945625/) from the Noun Project 
+* Uses ["Pirate" by Andrejs Kirma, LV](https://thenounproject.com/icon/1263137/) from the Noun Project
+* Thanks to [animate.css](https://github.com/daneden/animate.css) by Daniel Eden for making it easy to make the ducks dance.
+* Some True Type fonts are used from [Google Fonts](https://fonts.google.com).
