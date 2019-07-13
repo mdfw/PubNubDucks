@@ -254,7 +254,7 @@ function updateDuckMetaTalk(talk, publisher) {
 function danceTheDuck(danceSyle, timetoken) {
     let partToDance = document.getElementById("js-pirate-duck");
     if (danceSyle === "lightSpeedOut") {
-        let partToDance = document.getElementById("js-pirate-duck__flag");
+        partToDance = document.getElementById("js-pirate-duck__flag");
     }
     partToDance.classList.add('animated', danceSyle, 'slow');
     function handleAnimationEnd() {
