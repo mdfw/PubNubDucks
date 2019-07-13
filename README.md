@@ -11,6 +11,7 @@ Features:
   - "After Publish" function and PubNub's KV Store to track recent actions and react by making the ducks dance and wiggle.
   - "After Publish" function to simulate extra duck chat inhabitants.
   - "On Request" API Enpoint function to allow interactions with the pirate duck chat from external sources. {not complete}
+- Built-in access to a log of recent incoming and outgoing PubNub messages to understand how changes are in the interface are implemented.
 - Use of aria-live sections to support better accessibility on chat changes.
 
 ---
