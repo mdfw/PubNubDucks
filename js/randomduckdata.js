@@ -44,7 +44,7 @@ function randomMessages(number) {
         fullText: "Down with the Geese!"},
         {buttonText: "Quack…?",
         fullText: "If I quack like a duck, am I a duck?"},
-        {buttonText: "Ducky…",
+        {buttonText: "Duckie…",
         fullText: "Duckie was robbed!"},
         {buttonText: "Strait…",
         fullText: "Messier 11 and strait on 'til morning."},
