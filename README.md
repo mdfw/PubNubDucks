@@ -1,4 +1,4 @@
-A Chat Demo using color changing, dancing, Pirate ducks with PubNub for realtime backend infrastructure and PubNub functions for some of the fun parts. Arrr. 
+A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. 
 ============
 
 Features:
