@@ -1,10 +1,9 @@
 /*
-    PubNub Functions Pirate Duck Bot
+    Pirate Duck Language Filter using PubNub Functions
     Copyright 2019, Mark D. F. Williams, All rights reserved
 
     Part of the PubNub Pirate Duck Chat Demo project.
-    Shows two possible interceptions. One is a bad word filter, the other a translation filter. For ducks. 
-    Install as a "Before publish or subscribe message" type Function.
+    Shows two possible interceptions using "Before publish or subscribe message" function. One is a bad word filter, the other a translation filter. For ducks. 
 */
 
 /** 
