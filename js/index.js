@@ -163,6 +163,20 @@ function handleButtonClick(e) {
    }
 }
 
+function handleCustomTextMessageSend(e) {
+    let ducksChatInput = document.getElementById("js-overlay-text-chat-input");
+    sendMessageToPubNub(CHANNEL_NAME_TALK, CHANNEL_KEY_TEXT, ducksChatInput.value);
+    ducksChatInput.value = "";
+    hideLogOverlay();
+}
+
+function handleCustomColorMessageSend(e) {
+    let ducksColorInput = document.getElementById("js-overlay-color-change-input");
+    sendMessageToPubNub(CHANNEL_NAME_COLOR, CHANNEL_KEY_COLOR, ducksColorInput.value);
+    ducksColorInput.value = "#ff0000";
+    hideLogOverlay();
+}
+
 function sendMessageToPubNub (channelName, contentKey, content ) {
     let msgToSend = {
         channel: channelName,
@@ -295,11 +309,25 @@ function logMessage(sentOrRecieved, messageType, theJson) {
 }
 
 function showLogOverlay () {
-    document.getElementById('js-message-log__overlay').style.display = "block";
-    document.getElementById("js-message-log__text-area").value = loggedMessages.join('\n');
+    document.getElementById('js-accessory-overlay').style.display = "block";
+    document.getElementById("js-message-log-area__text-area").value = loggedMessages.join('\n');
+    document.getElementById("js-message-log-area").style.display = "block";
+}
+
+function showTextInputOverlay () {
+    document.getElementById('js-accessory-overlay').style.display = "block";
+    document.getElementById("js-overlay-text-chat").style.display = "block";
+}
+
+function showColorInputOverlay () {
+    document.getElementById('js-accessory-overlay').style.display = "block";
+    document.getElementById("js-overlay-color-change").style.display = "block";
 }
 
 function hideLogOverlay () {
-    document.getElementById('js-message-log__overlay').style.display = "none";
+    document.getElementById('js-accessory-overlay').style.display = "none";
+    document.getElementById("js-overlay-text-chat").style.display = "none";
+    document.getElementById("js-overlay-color-change").style.display = "none";
+    document.getElementById("js-message-log-area").style.display = "none";
 }
 

@@ -11,20 +11,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-        <style>
-                @font-face {
-                    font-family: "AmaticSC";
-                    src: url("fonts/AmaticSC-Regular.ttf");
-                }
-                @font-face {
-                    font-family: "ProximaNova-Regular";
-                    src: url("fonts/ProximaNova-Regular.otf")
-                }
-                @font-face {
-                    font-family: "ProximaNova-Semibold";
-                    src: url("fonts/ProximaNova-Semibold.otf")
-                }
-        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -33,33 +19,23 @@
                 <aside class="marketing-aside">
                     <p>PubNub powers realtime connected experiences.</p>
 
-                    <p>Send messages to millions of your connected users around the world in 250ms.</p>   
-                    <p><a href="https://www.pubnub.com">Learn more</a></p>
-                    <img src="">
-
-                    <p><a href="https://bit.ly/someurl">https://bit.ly/someurl</a></p>
+                    <p>Global, secure (HIPPA/SOC2) Pub/Sub infrastructure with use cases in realtime secure chat, IOT, gaming, and asset tracking.</p>   
+                    <p class="marketing-pubnub-link"><a href="https://www.pubnub.com">https://pubnub.com</a></p>
+                    <div class="marketing-qrcode">
+                        <p class="marketing-qrcode__top">Play Pirate Duck Chat at home:</p>
+                        <img class="marketing-qrcode__image" src="images/pnducksqr.png" width="140" height="140">
+                        <p class="marketing-qrcode__bottom"><a href="https://bit.ly/pnducks">https://bit.ly/pnducks</a></p>
+                    </div>
                 </aside>
             </div>
             <article>
                 <h2 class="demo-header">
-                    Demo: Pirate duck chat
+                    Demo: Pirate Duck Chat
                 </h2>
-                <p class="ducks-status" id="js-duck-status">
-                    Normally there would controls for changing colors. It appears either that javascript is not enabled or that there is a problem loading our connections.
-                </p>
-                <div class="buttons-area" id="js-buttons-area" hidden=true>
-                    <div id="buttons-area__text-buttons">
-                        <button class="button button__publish-text js-publish-button" id="js-button__publish-text--1" data-type="text" data-text="If it quacks like a duck, is it a duck?" onclick="handleButtonClick(this)">"Quacks…"</button>
-                        <button class="button button__publish-text js-publish-button" id="js-button__publish-text--2" data-type="text" data-text="A duck without Ahab is just a duck." onclick="handleButtonClick(this)">"A duck…"</button>
-                        <button class="button button__publish-text js-publish-button" data-type="text" data-text="Woof!" onclick="handleButtonClick(this)">"Woof!"</button>            
-                    </div>  
-                    <div id="buttons-area__color-buttons">
-                        <button class="button button__publish-color button__color--red js-publish-button" data-type="color" data-text="#D02129" onclick="handleButtonClick(this)">Red</button>
-                        <button class="button button__publish-color button__color--blue js-publish-button" data-type="color" data-text="#4421D0" onclick="handleButtonClick(this)">Blue</button>
-                        <button class="button button__publish-color button__color--yellow js-publish-button" data-type="color" data-text="#FECE53" onclick="handleButtonClick(this)">Yellow</button>
-                    </div>
-                </div>
                 <div id="duck-area">
+                    <div id="duck-area__about">
+                        <a href="#">About</a>
+                    </div>
                     <div id="duck-area__top">
                         <div class="duck-speech">
                             <div class="duck-speech__who" id="js-duck-speech__who">
@@ -79,34 +55,70 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="duck-area__meta" id="js-duck-area__meta">
-                        <p class="duck-meta-part duck-meta_part__header" id="js-duck-meta_part__header">
-                            About #TheRaft
-                        </p>
-                        <p class="duck-meta-part duck-meta-part__count" id="js-duck-meta-part__count" aria-live="polite">
-                        </p>      
-                        <p class="duck-meta-part duck-meta-part__name" id="js-duck-meta-part__name" aria-live="polite">
-                        </p>
-                        <p class="duck-meta-part duck-meta-part__talk" id="js-duck-meta-part__talk" aria-live="polite">
-                        </p>
-                        <p class="duck-meta-part duck-meta-part__color" id="js-duck-meta-part__color" aria-live="polite">
-                        </p>
-                        <p class="duck-meta-part duck-meta-part__dance" id="js-duck-meta-part__dance" aria-live="polite">
-                        </p>
-                        <p class="duck-meta-part duck-meta-part__log-link" id="js-duck-meta-part__log-link">
-                            <a class="message-log__trigger-link" id="js-message-log__trigger-link"  onclick="showLogOverlay()">Show message log</a>
-                        </p>
-        
+                </div>
+                <p class="ducks-status" id="js-duck-status">
+                    Normally there would controls for changing colors. It appears either that javascript is not enabled or that there is a problem loading our connections.
+                </p>
+                <div class="buttons-area" id="js-buttons-area" hidden=true>
+                    <div id="buttons-area__text-buttons">
+                        <p class="buttons-area_text-buttons buttons-area_text-buttons_header">Send a <a class="buttons-area_text-buttons_header_link special_hidden_link" href="#" onclick="showTextInputOverlay()">message</a> to Pirate Duck Chat</p>
+                        <button class="button button__publish-text js-publish-button" id="js-button__publish-text--1" data-type="text" data-text="If it quacks like a duck, is it a duck?" onclick="handleButtonClick(this)">"Quacks…"</button>
+                        <button class="button button__publish-text js-publish-button" id="js-button__publish-text--2" data-type="text" data-text="A duck without Ahab is just a duck." onclick="handleButtonClick(this)">"A duck…"</button>
+                        <button class="button button__publish-text js-publish-button" data-type="text" data-text="Woof!" onclick="handleButtonClick(this)">"Woof!"</button>            
+                    </div>  
+                    <div id="buttons-area__color-buttons">
+                        <p class="buttons-area_text-buttons buttons-area_text-buttons_header">Suggest the Pirate Ducks <a class="buttons-area_color-buttons_header_link special_hidden_link" href="#" onclick="showColorInputOverlay()">change color</a></p>
+                        <button class="button button__publish-color button__color--red js-publish-button" data-type="color" data-text="#D02129" onclick="handleButtonClick(this)">Red</button>
+                        <button class="button button__publish-color button__color--blue js-publish-button" data-type="color" data-text="#4421D0" onclick="handleButtonClick(this)">Blue</button>
+                        <button class="button button__publish-color button__color--yellow js-publish-button" data-type="color" data-text="#FECE53" onclick="handleButtonClick(this)">Yellow</button>
                     </div>
                 </div>
-            </article>
+                <div class="duck-area__meta" id="js-duck-area__meta">
+                    <p class="duck-meta-part duck-meta_part__header" id="js-duck-meta_part__header">
+                        About #TheRaft
+                    </p>
+                    <p class="duck-meta-part duck-meta-part__count" id="js-duck-meta-part__count" aria-live="polite">
+                    </p>      
+                    <p class="duck-meta-part duck-meta-part__name" id="js-duck-meta-part__name" aria-live="polite">
+                    </p>
+                    <p class="duck-meta-part duck-meta-part__talk" id="js-duck-meta-part__talk" aria-live="polite">
+                    </p>
+                    <p class="duck-meta-part duck-meta-part__color" id="js-duck-meta-part__color" aria-live="polite">
+                    </p>
+                    <p class="duck-meta-part duck-meta-part__dance" id="js-duck-meta-part__dance" aria-live="polite">
+                    </p>
+                    <p class="duck-meta-part duck-meta-part__log-link" id="js-duck-meta-part__log-link">
+                        <a class="message-log__trigger-link" id="js-message-log__trigger-link"  onclick="showLogOverlay()">Show message log</a>
+                    </p>
+    
+                </div>
+        </article>
          </div>
-         <div class="message-log__overlay" id="js-message-log__overlay">
+         <div class="accessory-overlay" id="js-accessory-overlay">
             <span class="helper"></span>
             <div>
-                <div class="message_log__close-button" id="js-message-log__close-button" onclick="hideLogOverlay()">X</div>
-                <textarea class="message-log__text-area" id="js-message-log__text-area"></textarea>
-            </div>
+                <div class="accessory-overlay__close-button" id="js-accessory-overlay__close-button" onclick="hideLogOverlay()">X</div>
+                <!-- show the messge log (responding to showLogOverlay() )-->
+                <div  class="message-log-area" id="js-message-log-area">
+                    <p>The latest messages sent to and received from PubNub.</p>
+                    <textarea class="message-log-area__text-area" id="js-message-log-area__text-area"></textarea>
+                </div>
+                <!-- show text chat optional input (responding to showTextInputOverlay() )-->
+                <form action="#" id="js-overlay-text-chat" class="overlay-text-chat" style="display:none"  onsubmit="handleCustomTextMessageSend()">
+                    <h3>Custom message</h3>
+                    <p>Like a good pirate duck, you are not constrained by the button. Send a custom message to the ducks! (80 characters max)</p>
+                    <input type="text" id="js-overlay-text-chat-input" maxlength="80">
+                    <input type="submit" value="send">
+                </form>
+
+                <!-- show color optional input (responding to showColorInputOverlay() )-->
+                <form action="#" id="js-overlay-color-change" class="overlay-color-change" style="display:none"  onsubmit="handleCustomColorMessageSend()">
+                        <h3>Custom colors</h3>
+                        <p>Not everything needs to be yellow, blue, and red. Suggest the ducks change to your favorite color.</p>
+                        <input type="color" value="#ff0000" id="js-overlay-color-change-input">
+                        <input type="submit" value="send" onclick="">
+                    </form>
+               </div>
         </div>
 
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.24.2.js"></script>
