@@ -225,12 +225,12 @@ function updateDuckStatus(statusMessage) {
 
 function updateDuckMetaName(name) {
     let metaColor = document.getElementById("js-duck-meta-part__name");
-    metaColor.innerHTML = "Your handle is <b>" + name + "</b>.";
+    metaColor.innerHTML = "🌐 Your handle is <b>" + name + "</b>.";
 }
 
 function updateDuckMetaConnectedDucks(statusMessage) {
     let connectedDucks = document.getElementById("js-duck-meta-part__count");
-    connectedDucks.innerHTML = statusMessage;
+    connectedDucks.innerHTML = "🦆 " + statusMessage;
 }
 
 function updateDuckColor(color, publisher) {
@@ -246,7 +246,7 @@ function updateDuckMetaColor(color, publisher) {
         publisher = "you";
     }
     let metaColor = document.getElementById("js-duck-meta-part__color");
-    metaColor.innerHTML = "Last color change by <b>" + publisher +"</b>: "  + color;
+    metaColor.innerHTML = "🖍️ Last color change by <b>" + publisher +"</b>: "  + color;
 }
 
 function updateDuckTalk(speech, publisher) {
@@ -262,7 +262,7 @@ function updateDuckTalk(speech, publisher) {
 
 function updateDuckMetaTalk(talk, publisher) {
     let metaColor = document.getElementById("js-duck-meta-part__talk");
-    metaColor.innerHTML = "Last chat message by <b>" + publisher + "</b>: <i>" + talk + "</i>";
+    metaColor.innerHTML = "💬 Last chat message by <b>" + publisher + "</b>: <i>" + talk + "</i>";
 }
 
 function danceTheDuck(danceSyle, timetoken) {
@@ -282,9 +282,9 @@ function danceTheDuck(danceSyle, timetoken) {
 
 function updateDuckMetaDance(danceSyle, currentlyDancing, timetoken) {
     let timed = new Date((timetoken/10000000)*1000);
-    let message = "At "+ timed.toLocaleTimeString() + " we did a " + danceSyle + " dance.";
+    let message = "⏩ At "+ timed.toLocaleTimeString() + " we did a " + danceSyle + " dance.";
     if (currentlyDancing) {
-        message = "We are doing a " + danceSyle + " dance because someone found the right button combo.";
+        message = "⏩ We are doing a " + danceSyle + " dance because someone found the right button combo.";
     }
     let metaDance = document.getElementById("js-duck-meta-part__dance");
     metaDance.innerHTML = message;
