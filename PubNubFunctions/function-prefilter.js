@@ -1,10 +1,12 @@
 /*
     Pirate Duck Language Filter using PubNub Functions
+        Part of the PubNub Pirate Duck Chat Demo project.
+
     Copyright 2019, Mark D. F. Williams, All rights reserved
 
-    Part of the PubNub Pirate Duck Chat Demo project.
     Shows two possible interceptions using "Before publish or subscribe message" function. One is a bad word filter, the other a translation filter. For ducks. 
 */
+
 
 /** 
  * The main function is declared with the export syntax. The incoming message is called request.
@@ -27,12 +29,15 @@ export default (request) => {
  */
 let filter = function(request) {
     return new Promise(function(resolve, reject) {
-        //console.log(request.message);
+        console.log(request.message);
 
-        // If the text field in the message is "Woof!", we change it to "Quack!"
+        // If the text field in the message contains "woof", we change it to "quack"
         // We also add a note to the message that could be optionally shown to the user.
-        if (request.message.text === "Woof!") {
-            request.message.text = "Quack!";
+        var woofIndex = request.message.text.toLowerCase().indexOf("woof");
+        if (woofIndex > -1) {
+            var textToFix = request.message.text;
+            textToFix = textToFix.substring(0, woofIndex) + 'quack' + textToFix.substring(woofIndex+4);
+            request.message.text = textToFix;
             request.message.note = "Note: Content was changed to align with community standards."
             return resolve(request);
         }
