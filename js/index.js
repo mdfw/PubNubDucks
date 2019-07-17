@@ -30,7 +30,7 @@ $(document).ready(function(){
     generatedDuckName = randomName(); // in randomduckdata.js
     updateDuckMetaName(generatedDuckName);
     updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
-    cloudDuckInterval();
+    //cloudDuckInterval();
 
     /**
      * Sets up a connection to the PubNub service. 
@@ -152,7 +152,7 @@ function requestHistory() {
             count: 1, // how many items to fetch. For this demo, we only need the last item.
         },
         function (status, response) {
-v            if (status.error === false) {
+            if (status.error === false) {
                 let lastColorMessage = response.messages[0].entry[CHANNEL_KEY_COLOR];
                 let lastDuckName = response.messages[0].entry[CHANNEL_KEY_DUCKNAME];
                 let timet = response.messages[0].timetoken;
