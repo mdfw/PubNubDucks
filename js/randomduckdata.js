@@ -58,6 +58,13 @@ function randomMessages(number) {
         fullText: "Shiver me tail feathers!"},
         {buttonText: "Good night",
         fullText: "Good night, Duckies. Good work. Sleep well. I'll most likely kill you in the morning."},
+        {buttonText: "Nip",
+        fullText: "I think I might get a Nip and Duck."},
+        {buttonText: "Quacko",
+        fullText: "It's quite a quackophony in here."},
+        {buttonText: "The code",
+        fullText: "Reminder: everyone must follow the code of conduckt. And watch the fowl language."},
+    
     ]
     return getRandomElements(allMessages, number);
 }
