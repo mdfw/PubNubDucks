@@ -1,10 +1,9 @@
 /*
-    PubNub Functions Pirate Duck Bot
+    Core JS functions for Pirate Duck Chat interface.
     Copyright 2019, Mark D. F. Williams, All rights reserved
 
     Part of the PubNub Pirate Duck Chat Demo project. 
     
-
 */
 const CHANNEL_KEY_TEXT = "text";
 const CHANNEL_KEY_COLOR = "color";
@@ -19,17 +18,28 @@ let pubnub = null;
 let generatedDuckName = "Duck";
 let loggedMessages = [];
 
+/**
+ * Core function that sets up everything.
+ */
 $(document).ready(function(){   
- /*   setInterval(function() {
-        console.log("bot message sent");
-        sendMessageToPubNub ("bots.ducks", "send:", "now" );
-    }, 30000);
-    */
-   setMessagesOnButtons();
-    generatedDuckName = randomName();
+    /**
+     * The next 4 lines set up a name for this session, gives two buttons a random message to send,
+     *   and sets a loading message.
+     */
+    setMessagesOnButtons();  // in randomduckdata.js
+    generatedDuckName = randomName(); // in randomduckdata.js
     updateDuckMetaName(generatedDuckName);
     updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
+    cloudDuckInterval();
 
+    /**
+     * Sets up a connection to the PubNub service. 
+     * Keys are aquired by signing up for the PubNub service (http://pubnub.com)
+     * ssl - defaults to true, but we'll be specific here.
+     * uuid - This is the identifier used by presence and publish systems to identify this unit.
+     *        For this demo, we will use our randomly generated duck name. However, PubNub best 
+     *        practice is to use a UUID and separately manage user names through other means. 
+     */
     pubnub = new PubNub({
         subscribeKey: "sub-c-95c7247c-9117-11e9-90d9-8a9dabba299e",
         publishKey: "pub-c-d9bf9d00-f741-4c61-b93f-7515d30719dc",
@@ -37,6 +47,14 @@ $(document).ready(function(){
         uuid: generatedDuckName,
     })
 
+    /**
+     * After setting up a connection, add a listener for any messages that may be sent from PubNub.
+     * There are currently 3 types of messages we are interested in:
+     *   * status: Network up/down, connection changes, etc. Listen for these to update UI.
+     *   * message: Messages that are sent from PubNub, normally in response to a
+     *        Publish event somewhere on the network.
+     *   * presence: Messages related to an entity joining or leaving subscribed channels (see below).
+     */
     pubnub.addListener({
         status: function(statusEvent) {
             processStatusEvent(statusEvent);
@@ -48,18 +66,35 @@ $(document).ready(function(){
             processPresenceEvent(presenceEvent);
         }
     })
+
+    /**
+     * Subscribe to channels. Best practice is to bundle subscribe events when possible
+     *   as it reduces network connections. In this case, the color channel has a separate 
+     *   subscription to also gain presence information. The color and dance channels are 
+     *   'side channels' and thus don't need separate presence. If they were different 
+     *   'rooms', separate presence may be needed.
+     */
     pubnub.subscribe({
-        channels: [CHANNEL_NAME_COLOR],
+        channels: [CHANNEL_NAME_TALK],
         withPresence: true, 
     });
     pubnub.subscribe({
-        channels: [CHANNEL_NAME_TALK, CHANNEL_NAME_DANCE],
+        channels: [CHANNEL_NAME_COLOR, CHANNEL_NAME_DANCE],
         withPresence: false,
     });
 });
 
-/* PubNub functions */
+/* ---- PubNub functions ---- */
 
+/**
+ * Process status events.
+ * This function does not handle the exhaustive list of status events. See documentation for others.
+ *   This shows how an application may handle these events.
+ *   If connection is offline, do not show sending options.
+ *   When a connection is made, make a request for history and an update to the current 
+ *     presence information (hereNow).
+ * @param {*} statusEvent 
+ */
 function processStatusEvent(statusEvent) {
     logReceivedMessage(statusEvent, "a status event");
     if (statusEvent.category === "PNDisconnectedCategory" || statusEvent.category === "PNTimeoutCategory" || statusEvent.category === "PNNetworkIssuesCategory" || statusEvent.category === "PNNetworkDownCategory") {
@@ -73,6 +108,11 @@ function processStatusEvent(statusEvent) {
     }
 }
 
+/**
+ * Requests a count of the current entities attached to the talk channel. 
+ * Does not request UUIDS as the interface does not currently show a list of connected ducks.
+ * Does not request state as that information is not used. Could be used for typing indicators or away state.
+ */
 function requestHereNow() {
     pubnub.hereNow(
         {
@@ -88,6 +128,11 @@ function requestHereNow() {
     );
 }
 
+/**
+ * Processes the hereNow message. Pulls out totalOccupancy and passes it to update the 
+ *   duck count message and logs the message.
+ * @param {*} message 
+ */
 function processHereNowResponse(message) {
     var totalOccupants = message.totalOccupancy;
     if (totalOccupants && totalOccupants > -1) {
@@ -96,14 +141,18 @@ function processHereNowResponse(message) {
     }
 }
 
+/**
+ * Requests current history, first from the color channel, then the talk channel.
+ * On receipt, sends it to the appropriate update functions and to the log.
+ */
 function requestHistory() {
     pubnub.history(
         {
             channel: CHANNEL_NAME_COLOR,
-            count: 1, // how many items to fetch
+            count: 1, // how many items to fetch. For this demo, we only need the last item.
         },
         function (status, response) {
-            if (status.error === false) {
+v            if (status.error === false) {
                 let lastColorMessage = response.messages[0].entry[CHANNEL_KEY_COLOR];
                 let lastDuckName = response.messages[0].entry[CHANNEL_KEY_DUCKNAME];
                 let timet = response.messages[0].timetoken;
@@ -118,9 +167,10 @@ function requestHistory() {
     pubnub.history(
         {
             channel: CHANNEL_NAME_TALK,
-            count: 1, // how many items to fetch
+            count: 1, // how many items to fetch. For this demo, we only need the last item.
         },
         function (status, response) {
+            // Response returns messages in an array (even if request.count == 1)
             if (status.error === false) {
                 let lastTalkMessage = response.messages[0].entry[CHANNEL_KEY_TEXT];
                 let lastDuckName = response.messages[0].entry[CHANNEL_KEY_DUCKNAME];
@@ -135,6 +185,12 @@ function requestHistory() {
     );
 }
 
+/**
+ * Process a presense event sent by PubNub. Normally happens when an entity joins or leaves
+ *   a subscribed channel. There is some effeciency logic that affects what UUIDs are sent. 
+ *   This demo does not list currrently connected UUIDs so that information is not processed.
+ * @param {*} message 
+ */
 function processPresenceEvent(message) {
     var occupancy = message.occupancy;
     if (occupancy && occupancy > -1) {
@@ -143,6 +199,10 @@ function processPresenceEvent(message) {
     }   
 }
 
+/**
+ * Process recieved messages. First, log the message, then send to appropriate UI handlers.
+ * @param {*} envelope 
+ */
 function processReceivedMessage(envelope) {
     logReceivedMessage(envelope, "a message");
     if (envelope.channel === CHANNEL_NAME_COLOR) {
@@ -154,7 +214,13 @@ function processReceivedMessage(envelope) {
     }
 }
 
-/* Sending messages */
+/* --- Sending messages --- */
+
+/**
+ * Send a message based on a butotn press. The data to send is stored as attributes on 
+ *   each button (makes the demo easier).
+ * @param {*} e 
+ */
 function handleButtonClick(e) {
     let dataType = e.getAttribute("data-type");
     let dataText = e.getAttribute("data-text");
@@ -165,6 +231,10 @@ function handleButtonClick(e) {
    }
 }
 
+/**
+ * There is a way to send a custom messages, the next two functions handle color and text messages.
+ * @param {*} e 
+ */
 function handleCustomTextMessageSend(e) {
     let ducksChatInput = document.getElementById("js-overlay-text-chat-input");
     sendMessageToPubNub(CHANNEL_NAME_TALK, CHANNEL_KEY_TEXT, ducksChatInput.value);
@@ -179,6 +249,12 @@ function handleCustomColorMessageSend(e) {
     hideLogOverlay();
 }
 
+/**
+ * 
+ * @param {*} channelName 
+ * @param {*} contentKey 
+ * @param {*} content 
+ */
 function sendMessageToPubNub (channelName, contentKey, content ) {
     let msgToSend = {
         channel: channelName,
@@ -351,3 +427,22 @@ function hideLogOverlay () {
     document.getElementById("js-message-log-area").style.display = "none";
 }
 
+/**
+ * An option to pretend there are other ducks participating in chat.
+ * Uses a PubNub Function to send a new random color or text message 
+ *   when a ping is received on the bots.ducks channel.
+ * Why? This is used as a demo app and it's nice for demo apps to 
+ *   look like there's activity.
+ */
+var cloudDuckInterval = null;
+function startCloudDucks () {
+    cloudDuckInterval = setInterval(function() {
+        sendMessageToPubNub ("bots.ducks", "send:", "now" );
+    }, 30000);
+}
+/**
+ * Stops cloud duck calls.
+ */
+function stopCloudDucks () {
+    clearInterval(cloudDuckInterval);
+}
