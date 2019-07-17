@@ -30,7 +30,7 @@ $(document).ready(function(){
     generatedDuckName = randomName(); // in randomduckdata.js
     updateDuckMetaName(generatedDuckName);
     updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
-    //startCloudDucks();
+    startCloudDucks();
 
     /**
      * Sets up a connection to the PubNub service. 
