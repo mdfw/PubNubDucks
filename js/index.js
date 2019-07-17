@@ -30,7 +30,7 @@ $(document).ready(function(){
     generatedDuckName = randomName(); // in randomduckdata.js
     updateDuckMetaName(generatedDuckName);
     updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
-    //cloudDuckInterval();
+    startCloudDucks();
 
     /**
      * Sets up a connection to the PubNub service. 
@@ -434,7 +434,7 @@ function hideLogOverlay () {
  * Why? This is used as a demo app and it's nice for demo apps to 
  *   look like there's activity.
  */
-var cloudDuckInterval = null;
+let cloudDuckInterval = null;
 function startCloudDucks () {
     cloudDuckInterval = setInterval(function() {
         sendMessageToPubNub ("bots.ducks", "send:", "now" );
