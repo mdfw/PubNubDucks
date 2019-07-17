@@ -106,7 +106,8 @@ function requestHistory() {
             if (status.error === false) {
                 let lastColorMessage = response.messages[0].entry[CHANNEL_KEY_COLOR];
                 let lastDuckName = response.messages[0].entry[CHANNEL_KEY_DUCKNAME];
-                updateDuckColor(lastColorMessage, lastDuckName);
+                let timet = response.messages[0].timetoken;
+                updateDuckColor(lastColorMessage, lastDuckName, timet);
                 logReceivedMessage(response.messages, "color history");
             } else {
                 console.log("Error recieving " + CHANNEL_NAME_COLOR + " channel history:");
@@ -123,7 +124,8 @@ function requestHistory() {
             if (status.error === false) {
                 let lastTalkMessage = response.messages[0].entry[CHANNEL_KEY_TEXT];
                 let lastDuckName = response.messages[0].entry[CHANNEL_KEY_DUCKNAME];
-                updateDuckTalk(lastTalkMessage, lastDuckName);
+                let timet = response.messages[0].timetoken;
+                updateDuckTalk(lastTalkMessage, lastDuckName, timet);
                 logReceivedMessage(response.messages, "talk history");
             } else {
                 console.log("Error recieving " + CHANNEL_NAME_TALK + " channel history:");
@@ -144,9 +146,9 @@ function processPresenceEvent(message) {
 function processReceivedMessage(envelope) {
     logReceivedMessage(envelope, "a message");
     if (envelope.channel === CHANNEL_NAME_COLOR) {
-        updateDuckColor(envelope.message[CHANNEL_KEY_COLOR], envelope.message[CHANNEL_KEY_DUCKNAME]);
+        updateDuckColor(envelope.message[CHANNEL_KEY_COLOR], envelope.message[CHANNEL_KEY_DUCKNAME], envelope.timetoken);
     } else if (envelope.channel === CHANNEL_NAME_TALK) {
-        updateDuckTalk(envelope.message[CHANNEL_KEY_TEXT], envelope.message[CHANNEL_KEY_DUCKNAME]);
+        updateDuckTalk(envelope.message[CHANNEL_KEY_TEXT], envelope.message[CHANNEL_KEY_DUCKNAME], envelope.timetoken);
     } else if (envelope.channel === CHANNEL_NAME_DANCE) {
         danceTheDuck(envelope.message[CHANNEL_KEY_DANCE], envelope.timetoken);
     }
@@ -233,36 +235,54 @@ function updateDuckMetaConnectedDucks(statusMessage) {
     connectedDucks.innerHTML = "🦆 " + statusMessage;
 }
 
-function updateDuckColor(color, publisher) {
+function updateDuckColor(color, publisher, timetoken) {
     let allTheDuck = document.getElementsByClassName('js-pirate-duck');
     Array.prototype.forEach.call(allTheDuck, function(el){
         el.setAttribute('style', 'fill: ' + color) ;
     });
-    updateDuckMetaColor(color, publisher);
+    updateDuckMetaColor(color, publisher, timetoken);
 }
 
-function updateDuckMetaColor(color, publisher) {
+function updateDuckMetaColor(color, publisher, timetoken) {
     if (publisher === generatedDuckName) {
         publisher = "you";
     }
     let metaColor = document.getElementById("js-duck-meta-part__color");
-    metaColor.innerHTML = "🖍️ Last color change by <b>" + publisher +"</b>: "  + color;
+    let time = " ";
+    if (timetoken) {
+        let timed = new Date((timetoken/10000000)*1000);
+        time = "at <span class='meta-time'>" + timed.toLocaleTimeString() + "</span> ";
+    }
+   metaColor.innerHTML = "🖍️ Last color change " + time + "by <b>" + publisher +"</b>: "  + color;
 }
 
-function updateDuckTalk(speech, publisher) {
+function updateDuckTalk(speech, publisher, timetoken) {
     if (publisher === generatedDuckName) {
         publisher = "you";
     }
-   let duckSpeechWho = document.getElementById("js-duck-speech__who");
-    duckSpeechWho.innerHTML = publisher + " said…";
+    let duckSpeechWho = document.getElementById("js-duck-speech__who");
+    duckSpeechWho.innerHTML = publisher + " ";
     let duckSpeechWhat = document.getElementById("js-duck-speech__what");
     duckSpeechWhat.innerHTML = speech;
-    updateDuckMetaTalk(speech, publisher);
+    
+    let duckSpeechWhen = document.getElementById("js-duck-speech__when");
+    if (timetoken) {
+        let timed = new Date((timetoken/10000000)*1000);
+        duckSpeechWhen.innerHTML = timed.toLocaleTimeString();
+    } else {
+        duckSpeechWhen.innerHTML = "";
+    }
+    updateDuckMetaTalk(speech, publisher, timetoken);
 }
 
-function updateDuckMetaTalk(talk, publisher) {
-    let metaColor = document.getElementById("js-duck-meta-part__talk");
-    metaColor.innerHTML = "💬 Last chat message by <b>" + publisher + "</b>: <i>" + talk + "</i>";
+function updateDuckMetaTalk(talk, publisher, timetoken) {
+    let metaTalk = document.getElementById("js-duck-meta-part__talk");
+    let time = " ";
+    if (timetoken) {
+        let timed = new Date((timetoken/10000000)*1000);
+        time = "at <span class='meta-time'>" + timed.toLocaleTimeString() + "</span> ";
+    }
+    metaTalk.innerHTML = "💬 Last chat message " + time + "by <b>" + publisher + "</b>: <i>" + talk + "</i>";
 }
 
 function danceTheDuck(danceSyle, timetoken) {

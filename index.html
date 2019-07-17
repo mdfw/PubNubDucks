@@ -33,13 +33,11 @@
                     Demo: Pirate Duck Chat
                 </h2>
                 <div id="duck-area">
-                    <div id="duck-area__about">
-                        <a href="#">About</a>
-                    </div>
                     <div id="duck-area__top">
                         <div class="duck-speech">
-                            <div class="duck-speech__who" id="js-duck-speech__who">
-                                A duck said:
+                            <div class="duck-speech__meta">
+                                <span class="duck-speech__who" id="js-duck-speech__who">A duck said:</span>
+                                <span class="duck-speech__when" id="js-duck-speech__when"></span>
                             </div>
                             <div class="duck-speech__what" id="js-duck-speech__what">
                                 Hello from PubNub!
@@ -74,7 +72,7 @@
                     </div>
                 </div>
                 <div class="duck-area__meta" id="js-duck-area__meta">
-                    <p class="duck-meta-part duck-meta_part__header" id="js-duck-meta_part__header">
+                    <p class="duck-meta-header duck-meta_part__header" id="js-duck-meta_part__header">
                         About #TheRaft
                     </p>
                     <p class="duck-meta-part duck-meta-part__count" id="js-duck-meta-part__count" aria-live="polite">
@@ -87,14 +85,11 @@
                     </p>
                     <p class="duck-meta-part duck-meta-part__dance" id="js-duck-meta-part__dance" aria-live="polite">
                     </p>
-                    <p class="duck-meta-part duck-meta-part__log-link" id="js-duck-meta-part__log-link">
-                        <a class="message-log__trigger-link" id="js-message-log__trigger-link"  onclick="showLogOverlay()">Show message log</a>
-                    </p>
-    
                 </div>
-        </article>
-         </div>
-         <div class="accessory-overlay" id="js-accessory-overlay">
+                <a class="message-log__trigger-link" id="js-message-log__trigger-link"  onclick="showLogOverlay()">Show PubNub message log</a>
+            </article>
+        </div>
+        <div class="accessory-overlay" id="js-accessory-overlay">
             <span class="helper"></span>
             <div>
                 <div class="accessory-overlay__close-button" id="js-accessory-overlay__close-button" onclick="hideLogOverlay()">X</div>
@@ -106,19 +101,23 @@
                 <!-- show text chat optional input (responding to showTextInputOverlay() )-->
                 <form action="#" id="js-overlay-text-chat" class="overlay-text-chat" style="display:none"  onsubmit="handleCustomTextMessageSend()">
                     <h3>Custom message</h3>
-                    <p>Like a good pirate duck, you are not constrained by the button. Send a custom message to the ducks! (80 characters max)</p>
-                    <input type="text" id="js-overlay-text-chat-input" maxlength="80">
-                    <input type="submit" value="send">
+                    <p class="accessory-overlay-description">Like a good pirate duck, you are not constrained by the button. Send a custom message to the ducks! (80 characters max)</p>
+                    <div class="accessory-overlay-input-area">
+                        <input type="text" id="js-overlay-text-chat-input" maxlength="80">
+                        <input type="submit" value="send">
+                    </div>
                 </form>
 
                 <!-- show color optional input (responding to showColorInputOverlay() )-->
                 <form action="#" id="js-overlay-color-change" class="overlay-color-change" style="display:none"  onsubmit="handleCustomColorMessageSend()">
-                        <h3>Custom colors</h3>
-                        <p>Not everything needs to be yellow, blue, and red. Suggest the ducks change to your favorite color.</p>
+                    <h3>Custom colors</h3>
+                    <p class="accessory-overlay-description">Not everything needs to be yellow, blue, and red. Suggest the ducks change to your favorite color.</p>
+                    <div class="accessory-overlay-input-area">
                         <input type="color" value="#ff0000" id="js-overlay-color-change-input">
                         <input type="submit" value="send" onclick="">
-                    </form>
-               </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.24.2.js"></script>
@@ -129,11 +128,3 @@
 </html>
 
 <!-- Copyright 2019, Mark D. F. Williams, All rights reserved. -->
-
-<!-- https://css-tricks.com/snippets/css/a-guide-to-flexbox/ -->
-<!-- https://medium.com/@aniboaz/animate-svg-4fa7dd00e860 -->
-<!-- https://github.com/jakearchibald/svgomg/blob/master/README.md -->
-<!-- How to create a simple CSS loading spinner & make it accessible https://codeburst.io/how-to-create-a-simple-css-loading-spinner-make-it-accessible-e5c83c2e464c -->
-<!--https://css-tricks.com/accessible-svgs/-->
-<!--https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions-->
-<!-- https://html-online.com/articles/simple-popup-box/ -->
