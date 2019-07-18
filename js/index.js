@@ -16,7 +16,6 @@ const LOG_LIMIT = 29;
 
 let pubnub = null;
 let generatedDuckName = "Duck";
-let loggedMessages = [];
 
 /**
  * Core function that sets up everything.
@@ -398,15 +397,20 @@ function logReceivedMessage(recievedJson, messageType) {
 function logMessage(sentOrRecieved, messageType, theJson) {
     let nowish = new Date();
     let message = sentOrRecieved + " " + messageType + " @ " + nowish.toLocaleTimeString() + ":\r" + JSON.stringify(theJson, null, 2) + "\r\r";
-    loggedMessages.unshift(message);
-    if (loggedMessages.length > LOG_LIMIT) {
-        loggedMessages.length = LOG_LIMIT;
+
+    let msgTable = document.getElementById("js-message-log-area__table");
+    let newRow = msgTable.insertRow(0);
+    var newCell = newRow.insertCell(0);
+    newCell.innerHTML = "<pre>" + message + "</pre>";
+
+    var rows = msgTable.getElementsByTagName("tr")
+    if (rows.length > LOG_LIMIT) {
+        msgTable.deleteRow(-1);
     }
 }
 
 function showLogOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
-    document.getElementById("js-message-log-area__text-area").value = loggedMessages.join('\n');
     document.getElementById("js-message-log-area").style.display = "block";
 }
 

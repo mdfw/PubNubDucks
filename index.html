@@ -96,7 +96,9 @@
                 <!-- show the messge log (responding to showLogOverlay() )-->
                 <div  class="message-log-area" id="js-message-log-area">
                     <p>The latest messages sent to and received from PubNub.</p>
-                    <textarea class="message-log-area__text-area" id="js-message-log-area__text-area"></textarea>
+                    <div  class="message-log-area__table-wrap">
+                        <table class="message-log-area__table" id="js-message-log-area__table"></table>
+                    </div>
                 </div>
                 <!-- show text chat optional input (responding to showTextInputOverlay() )-->
                 <form action="#" id="js-overlay-text-chat" class="overlay-text-chat" style="display:none"  onsubmit="handleCustomTextMessageSend()">

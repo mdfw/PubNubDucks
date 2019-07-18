@@ -227,13 +227,26 @@ article {
    display:none;
 }
 
-.message-log-area__text-area {
+.message-log-area__table-wrap {
+   overflow-y:auto;
+   width: 100%;
+   height: 100%;
+}
+.message-log-area__table {
    width: 100%;
    height: 100%;
    border-width: 0px;
-   font-family: "SourceCodePro-Regular"
+   font-family: "SourceCodePro-Regular";
+   text-align: left;
 }
 
+.message-log-area__table td {
+   word-break: break-all;
+}
+
+.message-log-area__table td pre {
+   margin: .25em 0px;
+}
 .accessory-overlay {
    background:rgba(0,0,0,.4);
    cursor:pointer;
