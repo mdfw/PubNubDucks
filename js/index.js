@@ -40,8 +40,8 @@ $(document).ready(function(){
      *        practice is to use a UUID and separately manage user names through other means. 
      */
     pubnub = new PubNub({
-        subscribeKey: "sub-c-95c7247c-9117-11e9-90d9-8a9dabba299e",
-        publishKey: "pub-c-d9bf9d00-f741-4c61-b93f-7515d30719dc",
+        subscribeKey: PUBNUB_SUBSCRIBE_K,
+        publishKey: PUBNUB_PUBLISH_K,
         ssl: true,
         uuid: generatedDuckName,
     })
