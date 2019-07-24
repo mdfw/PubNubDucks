@@ -4,9 +4,7 @@
 
     Part of the PubNub Pirate Duck Chat Demo project. 
 
-    Add this to a PubNub function slot and pretend you have more Pirate Ducks in your #TheRaft chatroom than you have connected.
-    
-
+    Add this to a PubNub function slot and pretend you have more Pirate Ducks in your chatroom than you have connected.
 */
 
 const pubnub = require('pubnub');
@@ -27,8 +25,6 @@ const ALL_MESSAGES = [{buttonText: "Down!",
         fullText: "Where there is a pond, there are Pirate Ducks."},
         {buttonText: "Shiver",
         fullText: "Shiver me tail feathers!"},
-        {buttonText: "Good night",
-        fullText: "Good night, Duckies. Good work. Sleep well. I'll most likely kill you in the morning."},
         ]
 
 const CHANNEL_NAME_COLOR = 'ducks.color';
@@ -40,10 +36,10 @@ const CHANNEL_KEY_DUCKNAME = 'duckName';
 const DUCK_BOTS = ["Nearly Headless Duck", "Captain Jack Duck", "Ducky Jones"];
 
 export default (request) => { 
-
-    console.log('request',request); // Log the request envelope passed 
+    // console.log('request',request); // Log the request envelope passed 
     
-    /* This call to fetchMessages will return, in the status property, the last item from each of the two channels listed. 
+    /* This call to fetchMessages will return, in the status property, 
+        the last item from each of the two channels listed. 
         Return will be in the 'channels' property as an object.
         That object will contain, as keys, the channel names.
         Each name property will have an associated array of messages.
@@ -65,11 +61,11 @@ export default (request) => {
         return pubnub.time().then((timetoken) => {
             let diff = timetoken - mostRecentMessageTimeIn;
             let diffsecs = diff / 10000000;
-            console.log ("diff2: " + diff + "   |||  " + diffsecs);
-            if (diffsecs > 20) {
+            if (diffsecs > 60) {
                 return canPublish(request);
             }
             return request.ok();
+
         });
     });
  }
@@ -96,4 +92,5 @@ function canPublish (request) {
     return pubnub.publish(messageObject).then((publishResponse) => {
         return request.ok();
     });
+
 }
