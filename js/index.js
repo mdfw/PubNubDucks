@@ -231,7 +231,9 @@ function handleButtonClick(e) {
 }
 
 /**
- * There is a way to send a custom messages, the next two functions handle color and text messages.
+ * There is a way to send a custom messages (not using the buttons)  
+ *   by clicking the "message" or "color change" text. 
+ *   The next two functions handle those message requests.
  * @param {*} e 
  */
 function handleCustomTextMessageSend(e) {
@@ -244,12 +246,12 @@ function handleCustomTextMessageSend(e) {
 function handleCustomColorMessageSend(e) {
     let ducksColorInput = document.getElementById("js-overlay-color-change-input");
     sendMessageToPubNub(CHANNEL_NAME_COLOR, CHANNEL_KEY_COLOR, ducksColorInput.value);
-    ducksColorInput.value = "#ff0000";
+    ducksColorInput.value = "#ff0000"; // Reset to a standard value.
     hideLogOverlay();
 }
 
 /**
- * 
+ * Send a message to pubnub. Takes the channel, contentKey and content.
  * @param {*} channelName 
  * @param {*} contentKey 
  * @param {*} content 
@@ -259,7 +261,7 @@ function sendMessageToPubNub (channelName, contentKey, content ) {
         channel: channelName,
         message: {
             [contentKey]: content,
-            [CHANNEL_KEY_DUCKNAME]: generatedDuckName,
+            [CHANNEL_KEY_DUCKNAME]: generatedDuckName, // Not technically required, but aids with history calls.
         }
     };
     pubnub.publish(msgToSend, function (status, response) {
@@ -272,19 +274,27 @@ function sendMessageToPubNub (channelName, contentKey, content ) {
     });
 }
 
-/* 
- *Display functions 
+/* --- Display functions --- */
+
+/**
+ * Show the buttons, etc. allowing content to be sent. 
  */
 function showChangeInterface() {
     updateDuckStatus("");
     document.getElementById("js-buttons-area").hidden = false;
 }
-
+/**
+ * Hide the buttons, etc. Normally because our connection went away. 
+ */
 function hideChangeInterface() {
     updateDuckStatus("");
     document.getElementById("js-buttons-area").hidden = true;
 }
 
+/**
+ * Updates the count of connected ducks. Normally called either from presence or hereNow handlers (above).
+ * @param {*} duckCount 
+ */
 function updateConnectedDuckCount(duckCount) {
     if (duckCount === 1) {
         updateDuckMetaConnectedDucks(duckCount + " connected duck (that's probably you).");
@@ -294,22 +304,41 @@ function updateConnectedDuckCount(duckCount) {
         updateDuckMetaConnectedDucks("");
     }
 }
-
+/**
+ * The status area is general information, normally connection status or errors.
+ * @param {*} statusMessage 
+ */
 function updateDuckStatus(statusMessage) {
     let ducksStatusArea = document.getElementById("js-duck-status");
     ducksStatusArea.innerHTML = "<p>" + statusMessage + "</p>";
 }
 
+/**
+ * Updates the name in the "meta" section at the bottom.
+ * @param {*} name 
+ */
 function updateDuckMetaName(name) {
     let metaColor = document.getElementById("js-duck-meta-part__name");
     metaColor.innerHTML = "🌐 Your handle is <b>" + name + "</b>.";
 }
 
+/**
+ * Fills in the number of connected ducks in the meta area.
+ * @param {*} statusMessage 
+ */
 function updateDuckMetaConnectedDucks(statusMessage) {
     let connectedDucks = document.getElementById("js-duck-meta-part__count");
     connectedDucks.innerHTML = "🦆 " + statusMessage;
 }
 
+/**
+ * Updates the duck color first, then calls the updateMetaColor function.
+ * All 'colorable' areas of the duck are tagged with 'js-pirate-duck'.
+ * Publisher and timetoken are not used here but are passed through.
+ * @param {*} color 
+ * @param {*} publisher 
+ * @param {*} timetoken 
+ */
 function updateDuckColor(color, publisher, timetoken) {
     let allTheDuck = document.getElementsByClassName('js-pirate-duck');
     Array.prototype.forEach.call(allTheDuck, function(el){
@@ -318,6 +347,12 @@ function updateDuckColor(color, publisher, timetoken) {
     updateDuckMetaColor(color, publisher, timetoken);
 }
 
+/**
+ * Update the color message in the Meta area
+ * @param {*} color 
+ * @param {*} publisher 
+ * @param {*} timetoken 
+ */
 function updateDuckMetaColor(color, publisher, timetoken) {
     if (publisher === generatedDuckName) {
         publisher = "you";
@@ -331,6 +366,12 @@ function updateDuckMetaColor(color, publisher, timetoken) {
    metaColor.innerHTML = "🖍️ Last color change " + time + "by <b>" + publisher +"</b>: "  + color;
 }
 
+/**
+ * Update the duck's speech. Then calls updateDuckMetaTalk
+ * @param {*} speech 
+ * @param {*} publisher 
+ * @param {*} timetoken 
+ */
 function updateDuckTalk(speech, publisher, timetoken) {
     if (publisher === generatedDuckName) {
         publisher = "you";
@@ -350,6 +391,12 @@ function updateDuckTalk(speech, publisher, timetoken) {
     updateDuckMetaTalk(speech, publisher, timetoken);
 }
 
+/**
+ * Update the duck meta talk area.
+ * @param {*} talk 
+ * @param {*} publisher 
+ * @param {*} timetoken 
+ */
 function updateDuckMetaTalk(talk, publisher, timetoken) {
     let metaTalk = document.getElementById("js-duck-meta-part__talk");
     let time = " ";
@@ -360,6 +407,12 @@ function updateDuckMetaTalk(talk, publisher, timetoken) {
     metaTalk.innerHTML = "💬 Last chat message " + time + "by <b>" + publisher + "</b>: <i>" + talk + "</i>";
 }
 
+/**
+ * Make the duck dance. The danceStyle should be a call that animate.css understands. 
+ * If the danceStyle is lightSpeedOut, only the flag is used.
+ * @param {*} danceSyle 
+ * @param {*} timetoken 
+ */
 function danceTheDuck(danceSyle, timetoken) {
     let partToDance = document.getElementById("js-pirate-duck");
     if (danceSyle === "lightSpeedOut") {
@@ -375,6 +428,12 @@ function danceTheDuck(danceSyle, timetoken) {
     updateDuckMetaDance(danceSyle, true), timetoken;
 }
 
+/**
+ * Update the last duck dance in the meta area.
+ * @param {*} danceSyle 
+ * @param {*} currentlyDancing 
+ * @param {*} timetoken 
+ */
 function updateDuckMetaDance(danceSyle, currentlyDancing, timetoken) {
     let timed = new Date((timetoken/10000000)*1000);
     let message = "⏩ At "+ timed.toLocaleTimeString() + " we did a " + danceSyle + " dance.";
@@ -385,7 +444,7 @@ function updateDuckMetaDance(danceSyle, currentlyDancing, timetoken) {
     metaDance.innerHTML = message;
 }
 
-/* Logging functions */
+/*  --- Logging functions --- */
 function logSentMessage(sentJson, messageType) {   
     logMessage("Sent", messageType, sentJson);
 }
@@ -409,6 +468,7 @@ function logMessage(sentOrRecieved, messageType, theJson) {
     }
 }
 
+/*  --- showing and hiding the overlay --- */
 function showLogOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
     document.getElementById("js-message-log-area").style.display = "block";
