@@ -92,18 +92,29 @@
                 <div class="accessory-overlay__close-button" id="js-accessory-overlay__close-button" onclick="hideLogOverlay()">X</div>
                 <!-- show the messge log (responding to showLogOverlay() )-->
                 <div  class="message-log-area" id="js-message-log-area">
-                    <p>The latest messages sent to and received from PubNub.</p>
+                    <p>The latest JSON messages sent to and received from PubNub.</p>
                     <div  class="message-log-area__table-wrap">
                         <table class="message-log-area__table" id="js-message-log-area__table"></table>
                     </div>
                 </div>
+
+                <!-- show history -->
+                <div  class="message-history-area" id="js-message-history-area">
+                    <p>Chat history</p>
+                    <div class="message-log-area__table-wrap">
+                        <table class="message-log-area__table" id="js-message-history-area__table"></table>
+                    </div>
+                </div>
+                
                 <!-- show text chat optional input (responding to showTextInputOverlay() )-->
                 <form action="#" id="js-overlay-text-chat" class="overlay-text-chat" style="display:none"  onsubmit="handleCustomTextMessageSend()">
                     <h3>Custom message</h3>
-                    <p class="accessory-overlay-description">Like a good pirate duck, you are not constrained by the button. Send a custom message to the ducks! (80 characters max)</p>
+                    <p class="accessory-overlay-description">Like a good pirate duck, you are not constrained by the button. Send a custom message to the ducks!</p>
                     <div class="accessory-overlay-input-area">
-                        <input type="text" id="js-overlay-text-chat-input" maxlength="80">
-                        <input type="submit" value="send">
+                        <label for="js-overlay-text-chat-input">Message to send  (80 characters max)</label>
+                        <input type="text" id="js-overlay-text-chat-input" class="overlay-text-chat-input" maxlength="80">
+                        <input type="submit" value="Send">
+                        <input type='button' onclick="hideLogOverlay()" name='Cancel' value='Cancel' />
                     </div>
                 </form>
 
@@ -112,8 +123,10 @@
                     <h3>Custom colors</h3>
                     <p class="accessory-overlay-description">Not everything needs to be yellow, blue, and red. Suggest the ducks change to your favorite color.</p>
                     <div class="accessory-overlay-input-area">
-                        <input type="color" value="#ff0000" id="js-overlay-color-change-input">
-                        <input type="submit" value="send" onclick="">
+                        <label for="js-overlay-text-color-input">Pick a color</label>
+                        <input type="color" value="#ff0000" id="js-overlay-color-change-input" class="overlay-color-change-input">
+                        <input type="submit" value="Send">
+                        <input type='button' onclick="hideLogOverlay()" name='Cancel' value='Cancel' />
                     </div>
                 </form>
             </div>
