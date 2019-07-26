@@ -274,6 +274,27 @@ function sendMessageToPubNub (channelName, contentKey, content ) {
     });
 }
 
+/**
+ * Call .history() on the talk channel and display it in an overlay.
+ */
+function requestChatHistory () {
+    showChatHistoryOverlay();
+    pubnub.history(
+        {
+            channel: CHANNEL_NAME_TALK,
+            count: 20, // how many items to fetch.
+        },
+        function (status, response) {
+            if (status.error === false) {
+                updateChatHistory(response.messages);
+            } else {
+                console.log("Error recieving " + CHANNEL_NAME_TALK + " channel history:");
+                console.log(status);
+            }
+        }
+    );
+
+}
 /* --- Display functions --- */
 
 /**
@@ -443,7 +464,35 @@ function updateDuckMetaDance(danceSyle, currentlyDancing, timetoken) {
     let metaDance = document.getElementById("js-duck-meta-part__dance");
     metaDance.innerHTML = message;
 }
+/* --- Chat history ---*/
 
+/**
+ * Display a series of chat messages.
+ * @param {*} messages 
+ */
+function updateChatHistory(messages) {
+    messages.forEach(function(element) {
+        let msgTable = document.getElementById("js-chat-history-area__table");
+        let newRow = msgTable.insertRow(0);
+        let clonableCell = document.getElementById("js-hidden-chat-history-table-td");
+        let newCell = clonableCell.cloneNode(true);
+        newCell.id = "";
+        let duckSpeechWho = newCell.getElementsByClassName("duck-chat-history__who")[0];
+        duckSpeechWho.innerHTML = element.entry.duckName;
+        let duckSpeechWhat = newCell.getElementsByClassName("duck-chat-history__what")[0];
+        duckSpeechWhat.innerHTML = element.entry.text;
+        let duckSpeechWhen = newCell.getElementsByClassName("duck-chat-history__when")[0];
+        let timetoken = element.timetoken;
+        if (timetoken) {
+            let timed = new Date((timetoken/10000000)*1000);
+            duckSpeechWhen.innerHTML = timed.toLocaleTimeString();
+        } else {
+            duckSpeechWhen.innerHTML = "";
+        }
+        newRow.appendChild(newCell);
+    });
+
+}
 /*  --- Logging functions --- */
 function logSentMessage(sentJson, messageType) {   
     logMessage("Sent", messageType, sentJson);
@@ -474,6 +523,11 @@ function showLogOverlay () {
     document.getElementById("js-message-log-area").style.display = "block";
 }
 
+function showChatHistoryOverlay () {
+    document.getElementById('js-accessory-overlay').style.display = "block";
+    document.getElementById("js-chat-history-area").style.display = "block";
+}
+
 function showTextInputOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
     document.getElementById("js-overlay-text-chat").style.display = "block";
@@ -489,6 +543,8 @@ function hideLogOverlay () {
     document.getElementById("js-overlay-text-chat").style.display = "none";
     document.getElementById("js-overlay-color-change").style.display = "none";
     document.getElementById("js-message-log-area").style.display = "none";
+    document.getElementById("js-chat-history-area").style.display = "none";
+
 }
 
 /**

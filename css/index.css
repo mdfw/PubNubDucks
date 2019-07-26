@@ -15,8 +15,6 @@
    src: url("../fonts/SourceCodePro-Regular.ttf")
 }
 
-
-
 body {
    margin: 0;
 }
@@ -24,6 +22,7 @@ body {
 a {
    color: #0099ff;
 }
+
 a:visited {
    color: #9c7dea;
 }
@@ -73,9 +72,11 @@ a:visited {
 .marketing-pubnub-link a {
    color: red;
 }
+
 .marketing-pubnub-link a:visited {
    color: red;
 }
+
 .marketing-qrcode {
    position: relative;
    display: inline-block;   
@@ -96,6 +97,7 @@ a:visited {
  .marketing-qrcode__image {
     margin-top: 20px;
  }
+
  .marketing-qrcode__bottom {
    font-size: 14px;
    position: absolute;
@@ -116,6 +118,7 @@ article {
    font-size: 48px;
    margin-bottom: 5px;
 }
+
 .buttons-area_text-buttons_header {
    font-family: ProximaNova-Regular, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
    margin-bottom: 5px;
@@ -140,10 +143,12 @@ article {
    background: #D02129;
    color: white;
 }
+
 .button__color--blue {
    background: #4421D0;
    color: white;
 }
+
 .button__color--yellow {
    background: #FECE53;
 }
@@ -155,7 +160,6 @@ article {
    display: flex;
    flex-direction: column; 
 }
-
 
 .duck-speech__meta {
    text-align: right;
@@ -172,6 +176,10 @@ article {
    font-family: "ProximaNova-Regular";
    font-size: 13px;
    color: darkgray;
+}
+
+.duck-speech__history-link {
+   font-size: 10px;
 }
 
 .duck-speech__what {
@@ -222,7 +230,7 @@ article {
 }
 
 /* Popup box BEGIN */
-.message-history-area {
+.chat-history-area {
    width: 100%;
    height: 85%;
    border-width: 0px;
@@ -260,9 +268,11 @@ article {
 .overlay-text-chat {
    text-align: left;
 }
+
 .overlay-color-change {
    text-align: left;
 }
+
 .accessory-overlay {
    background:rgba(0,0,0,.4);
    cursor:pointer;
@@ -333,6 +343,30 @@ article {
    height: 50px;
    width: 50px;
    margin: 5px 0 5px 0;
+}
+
+.duck-chat-history__meta {
+   text-align: left;
+}
+
+.duck-chat-history__who {
+   font-family: "ProximaNova-Regular";
+   font-size: 15px;
+   font-weight: 800;
+   text-align: right;
+}
+
+.duck-chat-history__when {
+   font-family: "ProximaNova-Regular";
+   font-size: 13px;
+   color: darkgray;
+}
+
+.duck-chat-history__what {
+   font-family: "AmaticSC";
+   font-size: 24px;
+   text-align: left;
+   margin-bottom: 8px;
 
 }
 
