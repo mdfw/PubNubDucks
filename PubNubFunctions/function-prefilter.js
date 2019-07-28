@@ -1,12 +1,11 @@
 /*
-    Pirate Duck Language Filter using PubNub Functions
-        Part of the PubNub Pirate Duck Chat Demo project.
-
+    PubNub Functions Pirate Duck Bot
     Copyright 2019, Mark D. F. Williams, All rights reserved
 
-    Shows two possible interceptions using "Before publish or subscribe message" function. One is a bad word filter, the other a translation filter. For ducks. 
+    Part of the PubNub Pirate Duck Chat Demo project.
+    Shows two possible interceptions. One is a bad word filter, the other a translation filter. For ducks. 
+    Install as a "Before publish or subscribe message" type Function.
 */
-
 
 /** 
  * The main function is declared with the export syntax. The incoming message is called request.
@@ -45,15 +44,38 @@ let filter = function(request) {
     });
 }
 
+var alphabet = {
+    'a': '.-',    'b': '-...',  'c': '-.-.', 'd': '-..',
+    'e': '.',     'f': '..-.',  'g': '--.',  'h': '....',
+    'i': '..',    'j': '.---',  'k': '-.-',  'l': '.-..',
+    'm': '--',    'n': '-.',    'o': '---',  'p': '.--.',
+    'q': '--.-',  'r': '.-.',   's': '...',  't': '-',
+    'u': '..-',   'v': '...-',  'w': '.--',  'x': '-..-',
+    'y': '-.--',  'z': '--..',  ' ': '/',
+    '1': '.----', '2': '..---', '3': '...--', '4': '....-', 
+    '5': '.....', '6': '-....', '7': '--...', '8': '---..', 
+    '9': '----.', '0': '-----', 
+}
+
 /**
  * Translate the message to morse code. This isn't used fully in our demo yet, but we have plans.
  * @param {*} request 
  */
 let translate = function(request) {
     return new Promise(function(resolve, reject) {
-        if (request.message.text === "Quack!") {
-            request.message.morse = "beep beep";
-        }
+        //From https://stackoverflow.com/a/26059399/1134731
+        let translated = request.message.text
+            .split('')            // Transform the string into an array: ['T', 'h', 'i', 's'...
+            .map(function(e){     // Replace each character with a morse "letter"
+                return alphabet[e.toLowerCase()] || ''; // Lowercase only, ignore unknown characters.
+            })
+            .join(' ')            // Convert the array back to a string.
+            .replace(/ +/g, ' '); // Replace double spaces that may occur when unknow characters were in the source string.
+
+        console.log(translated);
+        request.message.morse = translated;
         resolve(request);
     });
 }
+
+
