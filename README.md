@@ -2,7 +2,7 @@ PubNub Pirate Duck Demo
 ============
 
 <p align="center">
-<img src="readme_images/red_duck.png" width=428 height=328>
+<img src="readme_images/red_duck.png" width=128 height=100>
 <h2>A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. </h2>
 <img src="readme_images/pirate_duck_screen_shot.png">
 </p>
