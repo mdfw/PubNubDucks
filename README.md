@@ -2,8 +2,9 @@ PubNub Pirate Duck Demo
 ============
 
 <p align="center">
-<img src="readme_images/red_duck.png">
+<img src="readme_images/red_duck.png" width=428 height=328>
 <h2>A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. </h2>
+<img src="readme_images/pirate_duck_screen_shot.png">
 </p>
 
 ## Features
@@ -20,7 +21,7 @@ PubNub Pirate Duck Demo
 - Use of aria-live sections to support better accessibility on chat changes.
 
 ## Demo
-[Demo](http://mdfw.github.io/pubnubducks)
+[Demo](https://mdfw.github.io/PubNubDucks/)
 
 ---
 ## Credits
