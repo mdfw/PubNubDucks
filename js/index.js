@@ -83,6 +83,7 @@ $(document).ready(function(){
     });
 });
 
+/* -------------------------- */
 /* ---- PubNub functions ---- */
 
 /**
@@ -213,6 +214,7 @@ function processReceivedMessage(envelope) {
     }
 }
 
+/* ------------------------ */
 /* --- Sending messages --- */
 
 /**
@@ -295,6 +297,7 @@ function requestChatHistory () {
     );
 
 }
+/* ------------------------- */
 /* --- Display functions --- */
 
 /**
@@ -304,6 +307,7 @@ function showChangeInterface() {
     updateDuckStatus("");
     document.getElementById("js-buttons-area").hidden = false;
 }
+
 /**
  * Hide the buttons, etc. Normally because our connection went away. 
  */
@@ -325,6 +329,7 @@ function updateConnectedDuckCount(duckCount) {
         updateDuckMetaConnectedDucks("");
     }
 }
+
 /**
  * The status area is general information, normally connection status or errors.
  * @param {*} statusMessage 
@@ -464,7 +469,9 @@ function updateDuckMetaDance(danceSyle, currentlyDancing, timetoken) {
     let metaDance = document.getElementById("js-duck-meta-part__dance");
     metaDance.innerHTML = message;
 }
-/* --- Chat history ---*/
+
+/* -------------------- */
+/* --- Chat history --- */
 
 /**
  * Display a series of chat messages.
@@ -493,7 +500,9 @@ function updateChatHistory(messages) {
     });
 
 }
-/*  --- Logging functions --- */
+
+/* ------------------------- */
+/* --- Logging functions --- */
 function logSentMessage(sentJson, messageType) {   
     logMessage("Sent", messageType, sentJson);
 }
@@ -517,35 +526,54 @@ function logMessage(sentOrRecieved, messageType, theJson) {
     }
 }
 
-/*  --- showing and hiding the overlay --- */
+/* -------------------------------------- */
+/* --- showing and hiding the overlay --- */
+
+/**
+ * Shows the PubNub log in an overlay window.
+ */
 function showLogOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
     document.getElementById("js-message-log-area").style.display = "block";
 }
 
+/**
+ * Shows the chat history in response to the history call in an overlay.
+ */
 function showChatHistoryOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
     document.getElementById("js-chat-history-area").style.display = "block";
 }
 
+/**
+ * Shows a custom text input in the overlay.
+ */
 function showTextInputOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
     document.getElementById("js-overlay-text-chat").style.display = "block";
 }
 
+/**
+ * Shows a custom color input in the overlay.
+ */
 function showColorInputOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "block";
     document.getElementById("js-overlay-color-change").style.display = "block";
 }
 
+/**
+ * Hide the overlay and all the sub-areas that can show up in the overlay.
+ */
 function hideLogOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "none";
     document.getElementById("js-overlay-text-chat").style.display = "none";
     document.getElementById("js-overlay-color-change").style.display = "none";
     document.getElementById("js-message-log-area").style.display = "none";
     document.getElementById("js-chat-history-area").style.display = "none";
-
 }
+
+/* ----------------- */
+/* --- Duck bots --- */
 
 /**
  * An option to pretend there are other ducks participating in chat.
@@ -560,6 +588,7 @@ function startCloudDucks () {
         sendMessageToPubNub ("bots.ducks", "send:", "now" );
     }, 30000);
 }
+
 /**
  * Stops cloud duck calls.
  */
