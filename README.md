@@ -1,11 +1,17 @@
-A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. 
+PubNub Pirate Duck Demo
 ============
 
-Features:
+<p align="center">
+![Red Duck](readme_images/red_duck.png)
+## A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. 
+
+</p>
+
+## Features:
 - Multiple PubNub channels for chat, color changing, dancing and bot pirate integration.
 - PubNub HereNow and Presence functionaility to get the number of connected ducks.
 - PubNub history funcionality for updating state when reconnecting.
-- How to handle PubNub network events.
+- Handling PubNub network events.
 - Using PubNub Functions for:
   - "Before Publish" function to simulate bad word filtering.
   - "After Publish" function and PubNub's KV Store to track recent actions and react by making the ducks dance and wiggle.
