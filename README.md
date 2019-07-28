@@ -2,12 +2,11 @@ PubNub Pirate Duck Demo
 ============
 
 <p align="center">
-![Red Duck](readme_images/red_duck.png)
-## A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. 
-
+<img src="readme_images/red_duck.png">
+<h2>A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. </h2>
 </p>
 
-## Features:
+## Features
 - Multiple PubNub channels for chat, color changing, dancing and bot pirate integration.
 - PubNub HereNow and Presence functionaility to get the number of connected ducks.
 - PubNub history funcionality for updating state when reconnecting.
@@ -19,6 +18,9 @@ PubNub Pirate Duck Demo
   - "On Request" API Enpoint function to allow interactions with the pirate duck chat from external sources. {not complete}
 - Built-in access to a log of recent incoming and outgoing PubNub messages to understand how changes are in the interface are implemented.
 - Use of aria-live sections to support better accessibility on chat changes.
+
+## Demo
+[Demo](http://mdfw.github.io/pubnubducks)
 
 ---
 ## Credits
