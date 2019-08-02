@@ -24,7 +24,10 @@ PubNub Pirate Duck Demo
 
 ### Using the demo to talk about PubNub
 The demo is specifically designed to be used in demo environments. Use the following as a guide.
-![Marked up demo screenshot](readme_images/how-to-use-duck-chat-to-talk-about-pubnub.png)
+
+<img src="readme_images/how-to-use-duck-chat-to-talk-about-pubnub.png" style="border:1px solid black;">
+
+
 1. This is the latest message sent on the `ducks.talk` channel. Name, time and content are all represented.
 2. The talk bubble opens an overlay and calls the `history` api for the last 20 messages in the `ducks.talk` channel.
 3. The duck is always the latest color message sent in the `ducks.color` channel. Shows how a chat room can turn into a connected experience, easily adding functionality not normally found in standard 'chat' solutions. 
@@ -40,11 +43,14 @@ The demo is specifically designed to be used in demo environments. Use the follo
 13. Clicking the "Show PubNub message log" will show the last 30 messages sent to and recieved from the PubNub service, in realtime. Use this to show developers how the JSON payload is packaged and displayed to the interface.
 14. `"Woof!"` is considered a bad word in the pirate duck language. As such, it is always changed to `"Quack!"` through a very simple "Before Publish" PubNub Function. Use this to describe how Functions can interact with the content flowing through the network.
 
-In addition to all of that, there is an "After Publish" PubNub function that listens to all messages posted to `ducks.talk` and `ducks.color`. The last three messages are stored in the KV Store. If the three are matched against a 'magic set', the function sends a 'dance' message to the `ducks.dance` channel. The dance aligns to one of the animations from animate.css. The duck will dance in response. Try `Yellow`, `Red`, `Blue` or `"Quack!"`, `"Quack!"`,`"Quack!"`. The full set of magic sequences can be found in the `function-dance.js` file in [PubNubFunctions/duck-dance](/tree/master/PubNubFunctions/duck-dance).
+In addition to all of that, there is an "After Publish" PubNub function that listens to all messages posted to `ducks.talk` and `ducks.color`. The last three messages are stored in the KV Store. If the three are matched against a 'magic set', the function sends a 'dance' message to the `ducks.dance` channel. The dance aligns to one of the animations from animate.css. The duck will dance in response. Try `Yellow`, `Red`, `Blue` or `"Quack!"`, `"Quack!"`,`"Quack!"`. The full set of magic sequences can be found in the `function-dance.js` file in [PubNubFunctions/duck-dance](https://github.com/mdfw/PubNubDucks/tree/master/PubNubFunctions/duck-dance).
 
+
+<p align="center">
 <video autoplay loop muted playsinline>
   <source src="readme_images/duckshake.mp4" type="video/mp4">
 </video>
+</p>
 
 ---
 ## Credits
