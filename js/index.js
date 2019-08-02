@@ -583,8 +583,8 @@ function hideLogOverlay () {
 let cloudDuckInterval = null;
 function startCloudDucks () {
     cloudDuckInterval = setInterval(function() {
-        sendMessageToPubNub ("bots.ducks", "send:", "now" );
-    }, 30000);
+        sendMessageToPubNub (CHANNEL_DUCK_BOTS, "send:", "now" );
+    }, CLOUD_DUCK_PING_INTERVAL);
 }
 
 /**
