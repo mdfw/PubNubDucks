@@ -1,4 +1,4 @@
-PubNub Pirate Duck Demo <img src="readme_images/pirate_duck_screen_shot.png">
+PubNub Pirate Duck Demo <img src="readme_images/red_duck.png" width=128 height=100>
 ============
 
 <p align="center">
