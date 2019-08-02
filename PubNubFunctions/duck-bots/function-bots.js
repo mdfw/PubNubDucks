@@ -33,6 +33,10 @@ const CHANNEL_KEY_TEXT = "text";
 const CHANNEL_KEY_COLOR = "color";
 const CHANNEL_KEY_DUCKNAME = 'duckName';
 
+/**
+ * If you change the number of items in the DUCK_BOTS array, change the 
+ *   CLOUD_DUCK_BOT_COUNT in pubnub-keys.js.
+ */
 const DUCK_BOTS = ["Nearly Headless Duck", "Captain Jack Duck", "Ducky Jones"];
 
 export default (request) => { 

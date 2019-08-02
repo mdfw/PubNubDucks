@@ -23,6 +23,7 @@ const LOG_LIMIT = 29; // The limit to the number of log items stored. Reduce to 
  *   message to CHANNEL_DUCK_BOTS every CLOUD_DUCK_PING_INTERVAL. 
  * To use, the duck-bots code must be installed into a function. See PubNubFunctions directory for more info.
  */
-const USE_DUCK_BOTS = false;
-const CHANNEL_DUCK_BOTS = 'bots.ducks'; // The name of the channel for the bots.
+const USE_CLOUD_DUCK_BOTS = false;
+const CHANNEL_NAME_DUCK_BOTS = 'bots.ducks'; // The name of the channel for the bots.
 const CLOUD_DUCK_PING_INTERVAL = 30000;
+const CLOUD_DUCK_BOT_COUNT = 3;

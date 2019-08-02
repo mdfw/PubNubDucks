@@ -319,6 +319,9 @@ function hideChangeInterface() {
  * @param {*} duckCount 
  */
 function updateConnectedDuckCount(duckCount) {
+    if (USE_CLOUD_DUCK_BOTS) {
+        duckCount = duckCount + CLOUD_DUCK_BOT_COUNT;
+    }
     if (duckCount === 1) {
         updateDuckMetaConnectedDucks(duckCount + " connected duck (that's probably you).");
     } else if (duckCount > -1) {
@@ -583,7 +586,7 @@ function hideLogOverlay () {
 let cloudDuckInterval = null;
 function startCloudDucks () {
     cloudDuckInterval = setInterval(function() {
-        sendMessageToPubNub (CHANNEL_DUCK_BOTS, "send:", "now" );
+        sendMessageToPubNub (CHANNEL_NAME_DUCK_BOTS, "send:", "now" );
     }, CLOUD_DUCK_PING_INTERVAL);
 }
 
