@@ -14,7 +14,7 @@ PubNub Pirate Duck Demo
 - Handling PubNub [network events](https://www.pubnub.com/docs/web-javascript/status-events?devrel_gh=pirate-duck-demo).
 - Using [PubNub Functions](https://www.pubnub.com/docs/blocks/function-types?devrel_gh=pirate-duck-demo) for:
   - "Before Publish" function to simulate bad word filtering and translation.
-  - "After Publish" function and PubNub's KV Store to track recent actions. With the correct set of actions, the functions sends a message that makes all of the ducks dance and wiggle.
+  - "After Publish" function and PubNub's [KV Store](https://www.pubnub.com/docs/blocks/kvstore-module?devrel_gh=pirate-duck-demo) to track recent actions. With the correct set of actions, the functions sends a message that makes all of the ducks dance and wiggle.
   - "After Publish" function to simulate extra duck chat inhabitants.
 - Built-in access to a log of recent incoming and outgoing PubNub messages to understand how changes happening in the interface are implemented.
 - Use of [aria-live](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) sections to support better accessibility on chat changes.
