@@ -5,14 +5,6 @@
     Part of the PubNub Pirate Duck Chat Demo project. 
     
 */
-const CHANNEL_KEY_TEXT = "text";
-const CHANNEL_KEY_COLOR = "color";
-const CHANNEL_KEY_DANCE = "style";
-const CHANNEL_KEY_DUCKNAME = 'duckName';
-const CHANNEL_NAME_COLOR = 'ducks.color';
-const CHANNEL_NAME_TALK = 'ducks.talk';
-const CHANNEL_NAME_DANCE = 'ducks.dance';
-const LOG_LIMIT = 29;
 
 let pubnub = null;
 let generatedDuckName = "Duck";
@@ -29,7 +21,13 @@ $(document).ready(function(){
     generatedDuckName = randomName(); // in randomduckdata.js
     updateDuckMetaName(generatedDuckName);
     updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
-    startCloudDucks();
+
+    /** 
+     * Use a PubNub function to simulate extra ducks if needed. Function can be found in PubNubFunctions/duck-bots
+     */
+    if (USE_DUCK_BOTS) {
+        startCloudDucks();
+    }
 
     /**
      * Sets up a connection to the PubNub service. 
