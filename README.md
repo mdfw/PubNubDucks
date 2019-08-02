@@ -25,9 +25,8 @@ PubNub Pirate Duck Demo
 ### Using the demo to talk about PubNub
 The demo is specifically designed to be used in demo environments. Use the following as a guide.
 
-<img src="readme_images/how-to-use-duck-chat-to-talk-about-pubnub.png" style="border:1px solid black;">
 
-
+![Marked up demo screenshot](readme_images/how-to-use-duck-chat-to-talk-about-pubnub-bordered.png)
 1. This is the latest message sent on the `ducks.talk` channel. Name, time and content are all represented.
 2. The talk bubble opens an overlay and calls the `history` api for the last 20 messages in the `ducks.talk` channel.
 3. The duck is always the latest color message sent in the `ducks.color` channel. Shows how a chat room can turn into a connected experience, easily adding functionality not normally found in standard 'chat' solutions. 
