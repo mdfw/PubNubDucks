@@ -43,21 +43,32 @@ The demo is specifically designed to be used in demo environments. Use the follo
 
 In addition to all of that, there is an "After Publish" PubNub function that listens to all messages posted to `ducks.talk` and `ducks.color`. The last three messages are stored in the KV Store. If the three are matched against a 'magic set', the function sends a 'dance' message to the `ducks.dance` channel. The dance aligns to one of the animations from animate.css. The duck will dance in response. Try `Yellow`, `Red`, `Blue` or `"Quack!"`, `"Quack!"`,`"Quack!"`. The full set of magic sequences can be found in the `function-dance.js` file in [PubNubFunctions/duck-dance](https://github.com/mdfw/PubNubDucks/tree/master/PubNubFunctions/duck-dance).
 
----
+
 ## Getting your own copy of Pirate Duck Chat
 1. Sign up for PubNub
 <a href="https://dashboard.pubnub.com/signup?devrel_gh=pirate-duck-demo">
     <img alt="PubNub Signup" src="https://i.imgur.com/og5DDjf.png" width=260 height=97/>
 </a>
 
----
+2. Install the `Publish key` and `Subscribe key` from the administration interface into the `pubnub-keys.js` files as `PUBNUB_PUBLISH_K` and `PUBNUB_SUBSCRIBE_K`.
+<img src="readme_images/publish_and_subscribe_keys.png">
+
+3. Optional: Follow the instructions in `PubNubFunctions/filter-and-translate/README.md` to install the pirate duck text chat filter and translation "before publish" PubNub Function.
+
+4. Optional: Follow the instructions in `PubNubFunctions/duck-dance/README.md` to install the pirate duck dance "after publish" PubNub Function.
+
+5. Optional: Follow the instructions in `PubNubFunctions/duck-bots/README.md` to install the pirate duck bots "after publish" PubNub Function.
+
+6. Have fun.
+
 ## Credits
 Pirate Duck Chat is maintained by Mark Williams
 
----
 ## License
+Software is licensed under MIT (see license file).
 
----
+The readme files are Copyright 2019 Mark D. F. Williams
+
 ## Acknowledgements
 * Uses ["Duck" by Nikita Kozin](https://thenounproject.com/icon/945625/) from the Noun Project 
 * Uses ["Pirate" by Andrejs Kirma, LV](https://thenounproject.com/icon/1263137/) from the Noun Project
