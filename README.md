@@ -3,12 +3,12 @@ PubNub Pirate Duck Demo
 
 <p align="center">
 <img src="readme_images/red_duck.png" width=128 height=100>
-<h2>A PubNub Chat Demo using color changing, dancing, Pirate ducks. Arrr. </h2>
+<h2>A connected experience for pirate ducks. Arrr. </h2>
 <img src="readme_images/pirate_duck_screen_shot.png">
 </p>
 
 ## Features
-- Multiple PubNub [subscription](https://www.pubnub.com/docs/web-javascript/features-matrix#subscribe?devrel_gh=pirate-duck-demo) channels for chat, color changing, dancing and bot pirate integration.
+- Multiple PubNub [subscription](https://www.pubnub.com/developers/tech/key-concepts/publish-subscribe/?devrel_gh=pirate-duck-demo) channels for chat, color changing, dancing and bot pirate integration.
 - PubNub [Presence](https://www.pubnub.com/docs/web-javascript/presence?devrel_gh=pirate-duck-demo) functionality & [HereNow](https://www.pubnub.com/docs/web-javascript/presence#here_now?devrel_gh=pirate-duck-demo) requests to get the number of connected ducks.
 - PubNub [Storage & Playback](https://www.pubnub.com/docs/web-javascript/storage-and-history?devrel_gh=pirate-duck-demo) (history) functionality for updating UI state when connecting and reconnecting. History also used to show recent messages in the chat channel on request.
 - Handling PubNub [network events](https://www.pubnub.com/docs/web-javascript/status-events?devrel_gh=pirate-duck-demo).
@@ -74,3 +74,6 @@ The readme files are Copyright 2019 Mark D. F. Williams
 * Uses ["Pirate" by Andrejs Kirma, LV](https://thenounproject.com/icon/1263137/) from the Noun Project
 * Thanks to [animate.css](https://github.com/daneden/animate.css) by Daniel Eden for making it easy to make the ducks dance.
 * Some True Type fonts are used from [Google Fonts](https://fonts.google.com).
+
+### Copyright
+This readme © 2019 Mark D. F. Williams All Rights Reserved.
