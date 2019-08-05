@@ -20,7 +20,7 @@ PubNub Pirate Duck Demo
 - Use of [aria-live](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions) sections to support better accessibility on chat changes.
 
 ## Demo
-[Demo](https://mdfw.github.io/PubNubDucks/)
+[Try it! Pretend that you too are a pirate duck.](https://mdfw.github.io/PubNubDucks/)
 
 ### Using the demo to talk about PubNub
 The demo is specifically designed to be used in demo environments. Use the following as a guide.
