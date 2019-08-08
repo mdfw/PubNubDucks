@@ -493,7 +493,7 @@ function updateChatHistory(messages) {
         let timetoken = element.timetoken;
         if (timetoken) {
             let timed = new Date((timetoken/10000000)*1000);
-            duckSpeechWhen.innerHTML = timed.toLocaleTimeString();
+            duckSpeechWhen.innerHTML = timed.toLocaleString();
         } else {
             duckSpeechWhen.innerHTML = "";
         }
