@@ -20,14 +20,7 @@ $(document).ready(function(){
     setMessagesOnButtons();  // in randomduckdata.js
     generatedDuckName = randomName(); // in randomduckdata.js
     updateDuckMetaName(generatedDuckName);
-    updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_COLOR + " and " + CHANNEL_NAME_TALK + " channels.");
-
-    /** 
-     * Use a PubNub function to simulate extra ducks if needed. Function can be found in PubNubFunctions/duck-bots
-     */
-    if (USE_DUCK_BOTS) {
-        startCloudDucks();
-    }
+    updateDuckStatus("Loading and subscribing to the " + CHANNEL_NAME_TALK + " channel.");
 
     /**
      * Sets up a connection to the PubNub service. 
@@ -66,18 +59,11 @@ $(document).ready(function(){
 
     /**
      * Subscribe to channels. Best practice is to bundle subscribe events when possible
-     *   as it reduces network connections. In this case, the color channel has a separate 
-     *   subscription to also gain presence information. The color and dance channels are 
-     *   'side channels' and thus don't need separate presence. If they were different 
-     *   'rooms', separate presence may be needed.
+     *   as it reduces network connections.
      */
     pubnub.subscribe({
         channels: [CHANNEL_NAME_TALK],
         withPresence: true, 
-    });
-    pubnub.subscribe({
-        channels: [CHANNEL_NAME_COLOR, CHANNEL_NAME_DANCE],
-        withPresence: false,
     });
 });
 
@@ -140,28 +126,10 @@ function processHereNowResponse(message) {
 }
 
 /**
- * Requests current history, first from the color channel, then the talk channel.
+ * Requests current history from the talk channel.
  * On receipt, sends it to the appropriate update functions and to the log.
  */
 function requestHistory() {
-    pubnub.history(
-        {
-            channel: CHANNEL_NAME_COLOR,
-            count: 1, // how many items to fetch. For this demo, we only need the last item.
-        },
-        function (status, response) {
-            if (status.error === false) {
-                let lastColorMessage = response.messages[0].entry[CHANNEL_KEY_COLOR];
-                let lastDuckName = response.messages[0].entry[CHANNEL_KEY_DUCKNAME];
-                let timet = response.messages[0].timetoken;
-                updateDuckColor(lastColorMessage, lastDuckName, timet);
-                logReceivedMessage(response.messages, "color history");
-            } else {
-                console.log("Error recieving " + CHANNEL_NAME_COLOR + " channel history:");
-                console.log(status);
-            }
-        }
-    );
     pubnub.history(
         {
             channel: CHANNEL_NAME_TALK,
@@ -203,12 +171,8 @@ function processPresenceEvent(message) {
  */
 function processReceivedMessage(envelope) {
     logReceivedMessage(envelope, "a message");
-    if (envelope.channel === CHANNEL_NAME_COLOR) {
-        updateDuckColor(envelope.message[CHANNEL_KEY_COLOR], envelope.message[CHANNEL_KEY_DUCKNAME], envelope.timetoken);
-    } else if (envelope.channel === CHANNEL_NAME_TALK) {
+    if (envelope.channel === CHANNEL_NAME_TALK) {
         updateDuckTalk(envelope.message[CHANNEL_KEY_TEXT], envelope.message[CHANNEL_KEY_DUCKNAME], envelope.timetoken);
-    } else if (envelope.channel === CHANNEL_NAME_DANCE) {
-        danceTheDuck(envelope.message[CHANNEL_KEY_DANCE], envelope.timetoken);
     }
 }
 
@@ -225,28 +189,18 @@ function handleButtonClick(e) {
     let dataText = e.getAttribute("data-text");
     if (dataType === CHANNEL_KEY_TEXT) {
         sendMessageToPubNub(CHANNEL_NAME_TALK, CHANNEL_KEY_TEXT, dataText);
-    } else if (dataType === CHANNEL_KEY_COLOR) {
-        sendMessageToPubNub(CHANNEL_NAME_COLOR, CHANNEL_KEY_COLOR, dataText);
-   }
+    }
 }
 
 /**
  * There is a way to send a custom messages (not using the buttons)  
- *   by clicking the "message" or "color change" text. 
- *   The next two functions handle those message requests.
+ *   by clicking the "message" text. 
  * @param {*} e 
  */
 function handleCustomTextMessageSend(e) {
     let ducksChatInput = document.getElementById("js-overlay-text-chat-input");
     sendMessageToPubNub(CHANNEL_NAME_TALK, CHANNEL_KEY_TEXT, ducksChatInput.value);
     ducksChatInput.value = "";
-    hideLogOverlay();
-}
-
-function handleCustomColorMessageSend(e) {
-    let ducksColorInput = document.getElementById("js-overlay-color-change-input");
-    sendMessageToPubNub(CHANNEL_NAME_COLOR, CHANNEL_KEY_COLOR, ducksColorInput.value);
-    ducksColorInput.value = "#ff0000"; // Reset to a standard value.
     hideLogOverlay();
 }
 
@@ -319,9 +273,6 @@ function hideChangeInterface() {
  * @param {*} duckCount 
  */
 function updateConnectedDuckCount(duckCount) {
-    if (USE_CLOUD_DUCK_BOTS) {
-        duckCount = duckCount + CLOUD_DUCK_BOT_COUNT;
-    }
     if (duckCount === 1) {
         updateDuckMetaConnectedDucks(duckCount + " connected duck (that's probably you).");
     } else if (duckCount > -1) {
@@ -345,8 +296,8 @@ function updateDuckStatus(statusMessage) {
  * @param {*} name 
  */
 function updateDuckMetaName(name) {
-    let metaColor = document.getElementById("js-duck-meta-part__name");
-    metaColor.innerHTML = "🌐 Your handle is <b>" + name + "</b>.";
+    let metaName = document.getElementById("js-duck-meta-part__name");
+    metaName.innerHTML = "🌐 Your handle is <b>" + name + "</b>.";
 }
 
 /**
@@ -356,41 +307,6 @@ function updateDuckMetaName(name) {
 function updateDuckMetaConnectedDucks(statusMessage) {
     let connectedDucks = document.getElementById("js-duck-meta-part__count");
     connectedDucks.innerHTML = "🦆 " + statusMessage;
-}
-
-/**
- * Updates the duck color first, then calls the updateMetaColor function.
- * All 'colorable' areas of the duck are tagged with 'js-pirate-duck'.
- * Publisher and timetoken are not used here but are passed through.
- * @param {*} color 
- * @param {*} publisher 
- * @param {*} timetoken 
- */
-function updateDuckColor(color, publisher, timetoken) {
-    let allTheDuck = document.getElementsByClassName('js-pirate-duck');
-    Array.prototype.forEach.call(allTheDuck, function(el){
-        el.setAttribute('style', 'fill: ' + color) ;
-    });
-    updateDuckMetaColor(color, publisher, timetoken);
-}
-
-/**
- * Update the color message in the Meta area
- * @param {*} color 
- * @param {*} publisher 
- * @param {*} timetoken 
- */
-function updateDuckMetaColor(color, publisher, timetoken) {
-    if (publisher === generatedDuckName) {
-        publisher = "you";
-    }
-    let metaColor = document.getElementById("js-duck-meta-part__color");
-    let time = " ";
-    if (timetoken) {
-        let timed = new Date((timetoken/10000000)*1000);
-        time = "at <span class='meta-time'>" + timed.toLocaleTimeString() + "</span> ";
-    }
-   metaColor.innerHTML = "🖍️ Last color change " + time + "by <b>" + publisher +"</b>: "  + color;
 }
 
 /**
@@ -434,43 +350,6 @@ function updateDuckMetaTalk(talk, publisher, timetoken) {
     metaTalk.innerHTML = "💬 Last chat message " + time + "by <b>" + publisher + "</b>: <i>" + talk + "</i>";
 }
 
-/**
- * Make the duck dance. The danceStyle should be a call that animate.css understands. 
- * If the danceStyle is lightSpeedOut, only the flag is used.
- * @param {*} danceSyle 
- * @param {*} timetoken 
- */
-function danceTheDuck(danceSyle, timetoken) {
-    let partToDance = document.getElementById("js-pirate-duck");
-    if (danceSyle === "lightSpeedOut") {
-        partToDance = document.getElementById("js-pirate-duck__flag");
-    }
-    partToDance.classList.add('animated', danceSyle, 'slow');
-    function handleAnimationEnd() {
-        partToDance.classList.remove('animated', danceSyle, 'slow');
-        partToDance.removeEventListener('animationend', handleAnimationEnd);
-        updateDuckMetaDance(danceSyle, false, timetoken);
-    }
-    partToDance.addEventListener('animationend', handleAnimationEnd);
-    updateDuckMetaDance(danceSyle, true), timetoken;
-}
-
-/**
- * Update the last duck dance in the meta area.
- * @param {*} danceSyle 
- * @param {*} currentlyDancing 
- * @param {*} timetoken 
- */
-function updateDuckMetaDance(danceSyle, currentlyDancing, timetoken) {
-    let timed = new Date((timetoken/10000000)*1000);
-    let message = "⏩ At "+ timed.toLocaleTimeString() + " we did a " + danceSyle + " dance.";
-    if (currentlyDancing) {
-        message = "⏩ We are doing a " + danceSyle + " dance because someone found the right button combo.";
-    }
-    let metaDance = document.getElementById("js-duck-meta-part__dance");
-    metaDance.innerHTML = message;
-}
-
 /* -------------------- */
 /* --- Chat history --- */
 
@@ -493,7 +372,7 @@ function updateChatHistory(messages) {
         let timetoken = element.timetoken;
         if (timetoken) {
             let timed = new Date((timetoken/10000000)*1000);
-            duckSpeechWhen.innerHTML = timed.toLocaleTimeString();
+            duckSpeechWhen.innerHTML = timed.toLocaleString();
         } else {
             duckSpeechWhen.innerHTML = "";
         }
@@ -555,44 +434,11 @@ function showTextInputOverlay () {
 }
 
 /**
- * Shows a custom color input in the overlay.
- */
-function showColorInputOverlay () {
-    document.getElementById('js-accessory-overlay').style.display = "block";
-    document.getElementById("js-overlay-color-change").style.display = "block";
-}
-
-/**
  * Hide the overlay and all the sub-areas that can show up in the overlay.
  */
 function hideLogOverlay () {
     document.getElementById('js-accessory-overlay').style.display = "none";
     document.getElementById("js-overlay-text-chat").style.display = "none";
-    document.getElementById("js-overlay-color-change").style.display = "none";
     document.getElementById("js-message-log-area").style.display = "none";
     document.getElementById("js-chat-history-area").style.display = "none";
-}
-
-/* ----------------- */
-/* --- Duck bots --- */
-
-/**
- * An option to pretend there are other ducks participating in chat.
- * Uses a PubNub Function to send a new random color or text message 
- *   when a ping is received on the bots.ducks channel.
- * Why? This is used as a demo app and it's nice for demo apps to 
- *   look like there's activity.
- */
-let cloudDuckInterval = null;
-function startCloudDucks () {
-    cloudDuckInterval = setInterval(function() {
-        sendMessageToPubNub (CHANNEL_NAME_DUCK_BOTS, "send:", "now" );
-    }, CLOUD_DUCK_PING_INTERVAL);
-}
-
-/**
- * Stops cloud duck calls.
- */
-function stopCloudDucks () {
-    clearInterval(cloudDuckInterval);
 }
