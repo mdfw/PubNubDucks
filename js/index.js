@@ -184,8 +184,8 @@ function requestHistory() {
 }
 
 /**
- * Process a presense event sent by PubNub. Normally happens when an entity joins or leaves
- *   a subscribed channel. There is some effeciency logic that affects what UUIDs are sent. 
+ * Process a presence event sent by PubNub. Normally happens when an entity joins or leaves
+ *   a subscribed channel. There is some efficiency logic that affects what UUIDs are sent. 
  *   This demo does not list currrently connected UUIDs so that information is not processed.
  * @param {*} message 
  */
@@ -198,7 +198,7 @@ function processPresenceEvent(message) {
 }
 
 /**
- * Process recieved messages. First, log the message, then send to appropriate UI handlers.
+ * Process received messages. First, log the message, then send to appropriate UI handlers.
  * @param {*} envelope 
  */
 function processReceivedMessage(envelope) {
@@ -216,7 +216,7 @@ function processReceivedMessage(envelope) {
 /* --- Sending messages --- */
 
 /**
- * Send a message based on a butotn press. The data to send is stored as attributes on 
+ * Send a message based on a button press. The data to send is stored as attributes on 
  *   each button (makes the demo easier).
  * @param {*} e 
  */
@@ -251,7 +251,7 @@ function handleCustomColorMessageSend(e) {
 }
 
 /**
- * Send a message to pubnub. Takes the channel, contentKey and content.
+ * Send a message to PubNub. Takes the channel, contentKey and content.
  * @param {*} channelName 
  * @param {*} contentKey 
  * @param {*} content 
@@ -394,7 +394,7 @@ function updateDuckMetaColor(color, publisher, timetoken) {
 }
 
 /**
- * Update the duck's speech. Then calls updateDuckMetaTalk
+ * Update the duck's speech. Then calls updateDuckMetaTalk.
  * @param {*} speech 
  * @param {*} publisher 
  * @param {*} timetoken 
