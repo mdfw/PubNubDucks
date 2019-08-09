@@ -40,7 +40,6 @@
                             <div class="duck-speech__meta">
                                 <span class="duck-speech__who" id="js-duck-speech__who">A duck said:</span>
                                 <span class="duck-speech__when" id="js-duck-speech__when"></span>
-                                <span class="duck-speech__history-link"><a href="#" onclick="requestChatHistory(); event.preventDefault();" class="special_hidden_link">💬</a></span>
                             </div>
                             <div class="duck-speech__what" id="js-duck-speech__what">
                                 Hello from PubNub!
@@ -69,8 +68,6 @@
                     </div>  
                 </div>
                 <div class="duck-area__meta" id="js-duck-area__meta">
-                    <p class="duck-meta-part duck-meta-part__count" id="js-duck-meta-part__count" aria-live="polite">
-                    </p>      
                     <p class="duck-meta-part duck-meta-part__name" id="js-duck-meta-part__name" aria-live="polite">
                     </p>
                     <p class="duck-meta-part duck-meta-part__talk" id="js-duck-meta-part__talk" aria-live="polite">
@@ -88,25 +85,6 @@
                     <p>The latest JSON messages sent to and received from PubNub.</p>
                     <div  class="message-log-area__table-wrap">
                         <table class="message-log-area__table" id="js-message-log-area__table"></table>
-                    </div>
-                </div>
-
-                <!-- show history -->
-                <div  class="chat-history-area" id="js-chat-history-area">
-                    <p>Chat history</p>
-                    <div class="message-log-area__table-wrap">
-                        <table class="message-log-area__table" id="js-chat-history-area__table"></table>
-                        <table class="hidden-chat-history-table" id="js-hidden-chat-history-table" style="display:none">
-                            <tr><td id="js-hidden-chat-history-table-td" class="duck-chat-history__td">
-                                <div class="duck-chat-history__meta">
-                                    <span class="duck-chat-history__who">A duck said:</span>
-                                    <span class="duck-chat-history__when"></span>
-                                </div>
-                                <div class="duck-chat-history__what">
-                                </div>
-                            </td></tr>
-                        </table>
-
                     </div>
                 </div>
                 
