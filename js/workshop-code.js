@@ -27,11 +27,10 @@
 // ++ With:
    /**
      * After setting up a connection, add a listener for any messages that may be sent from PubNub.
-     * There are currently 3 types of messages we are interested in:
+     * There are currently 2 types of messages we are interested in:
      *   * status: Network up/down, connection changes, etc. Listen for these to update UI.
      *   * message: Messages that are sent from PubNub, normally in response to a
      *        Publish event somewhere on the network.
-     *   * presence: Messages related to an entity joining or leaving subscribed channels (see below).
      */
     pubnub.addListener({
         status: function(statusEvent) {
@@ -66,9 +65,7 @@
  * Process status events.
  * This function does not handle the exhaustive list of status events. See documentation for others.
  *   This shows how an application may handle these events.
- *   If connection is offline, do not show sending options.
- *   When a connection is made, make a request for history and an update to the current 
- *     presence information (hereNow).
+ *   If connection is offline, hide sending options, when it comes back, show the sending options (showChangeInterface())
  * @param {*} statusEvent 
  */
 function processStatusEvent(statusEvent) {
@@ -81,7 +78,6 @@ function processStatusEvent(statusEvent) {
         showChangeInterface();
     }
 }
-
 
 // ##############
 // -- Replace:
@@ -99,3 +95,34 @@ function processReceivedMessage(envelope) {
         updateDuckTalk(envelope.message[CHANNEL_KEY_TEXT], envelope.message[CHANNEL_KEY_DUCKNAME], envelope.timetoken);
     }
 }
+
+// ##############
+// -- Replace:
+/**
+ * Send a message to PubNub
+ */
+// ++ With:
+/**
+ * Send a message to PubNub. Takes the channel, contentKey and content.
+ * @param {*} channelName 
+ * @param {*} contentKey 
+ * @param {*} content 
+ */
+function sendMessageToPubNub (channelName, contentKey, content ) {
+    let msgToSend = {
+        channel: channelName,
+        message: {
+            [contentKey]: content,
+            [CHANNEL_KEY_DUCKNAME]: generatedDuckName, // Not technically required, but aids with history calls.
+        }
+    };
+    pubnub.publish(msgToSend, function (status, response) {
+        if (status.error) {
+            updateDuckStatus("There was an error sending your message.");
+            setTimeout(function(){ updateDuckStatus(""); }, 5000);
+        } else {
+            logSentMessage(msgToSend, "a message to the '" + channelName + "' channel");
+        }
+    });
+}
+

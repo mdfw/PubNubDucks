@@ -75,29 +75,8 @@ function handleCustomTextMessageSend(e) {
 }
 
 /**
- * Send a message to pubnub. Takes the channel, contentKey and content.
- * @param {*} channelName 
- * @param {*} contentKey 
- * @param {*} content 
+ * Send a message to PubNub
  */
-function sendMessageToPubNub (channelName, contentKey, content ) {
-    let msgToSend = {
-        channel: channelName,
-        message: {
-            [contentKey]: content,
-            [CHANNEL_KEY_DUCKNAME]: generatedDuckName, // Not technically required, but aids with history calls.
-        }
-    };
-    pubnub.publish(msgToSend, function (status, response) {
-        if (status.error) {
-            updateDuckStatus("There was an error sending your message.");
-            setTimeout(function(){ updateDuckStatus(""); }, 5000);
-        } else {
-            logSentMessage(msgToSend, "a message to the '" + channelName + "' channel");
-        }
-    });
-}
-
 
 /* ------------------------- */
 /* --- Display functions --- */
