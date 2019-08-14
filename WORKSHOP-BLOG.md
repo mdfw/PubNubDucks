@@ -4,7 +4,7 @@ This is AQuack.
 
 She is the Pirate Duck Admiral. She wants to chat in real-time with the other pirate ducks on rafts distributed around the world - in realtime. And she wants it now.
  
-The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.io, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better use PubNub, with it's globally distributed endpoints and solid uptime.
+The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.io, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better to use PubNub, with it's globally distributed endpoints and solid uptime.
 
 ## The requirements:
 * Each session will be psuedo-anonymous, pirate ducks do not want to be identified.
@@ -47,7 +47,7 @@ Opening the `index.html` file, you will find a few things:
 
 To make our chat interactive, we will need PubNub keys. PubNub is free for up to 1 million messages a month and does not require a credit card at sign up. 
 
-<a href="https://dashboard.pubnub.com/signup?devrel_gh=YOUR-REPO-NAME-HERE">
+<a href="https://dashboard.pubnub.com/signup?devrel_gh=pubnubducks_basic">
     <img alt="PubNub Signup" src="https://i.imgur.com/og5DDjf.png" width=260 height=97/>
 </a>
 
@@ -55,7 +55,7 @@ Once signed up, get the subscribe and publish keys. Click the project created fo
 
 ![demo keyset](workshop-images/demo-keyset.png)
 
-We won't be using the Secret Key in this workshop. Use the Secret Key when adding authentication using our [PubNub Access Module](https://www.pubnub.com/developers/tech/security/access-manager/).
+We won't be using the Secret Key in this workshop. Use the Secret Key when adding authentication using the [PubNub Access Module](https://www.pubnub.com/developers/tech/security/access-manager/).
 
 Open `js/pubnub-keys.js` and make the following replacements:
 
@@ -146,7 +146,7 @@ Next we need to add the actual functions that will handle the status and message
 > If you see `Suscribe to channels` in the code after the addListener section, don't worry, we will come back to subscribing in a minute.
 
 ## Handle status events
-Our listener calls `processStatusEvent()` so we should add that.
+Our listener calls `processStatusEvent()`, so we should add that.
 
 _Replace:_ 
 ```javascript
@@ -223,7 +223,7 @@ function processReceivedMessage(envelope) {
     updateDuckTalk(envelope.message[CHANNEL_KEY_TEXT], envelope.message[CHANNEL_KEY_DUCKNAME], envelope.timetoken);
 }
 ```
-This parses the `envelope.message` object for the `CHANNEL_KEY_TEXT` and `CHANNEL_KEY_DUCKNAME` parameters, along with the `timetoken` and passes them all to `updateDuckTalk`. `updateDuckTalk` will update the interface.
+This parses the `envelope.message` object for the `CHANNEL_KEY_TEXT` and `CHANNEL_KEY_DUCKNAME` parameters, along with the `timetoken`, and passes them all to `updateDuckTalk`. `updateDuckTalk` will update the interface.
 
 ## Subscribing
 Now that we have listeners with associated code to process received messages, we need to tell the PubNub service that we want to receive those messages. That's called subscribing. A client can subscribe to multiple channels at one time. For now, we are just going to subscribe to the same channel that we will publishing messages to - the channel identified by the `CHANNEL_NAME_TALK` variable in the `js/pubnub-keys.js` file.
