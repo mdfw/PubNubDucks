@@ -303,4 +303,4 @@ Next, we call `pubnub.publish` with the message object. If the [publish](https:/
 
 At this point, Pirate Duck IT should have an app that meets the requirements set out by the Admiral and scales to the millions of rafts around the world. With this much communication, we can all welcome our new Pirate Duck overlords.
 
-Next time: how to ad a basic bad word filter and translator to our Pirate Duck app.
+Next time: how to add a basic bad word filter and translator to our Pirate Duck app.
