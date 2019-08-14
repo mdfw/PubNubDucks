@@ -1,6 +1,7 @@
 This is AQuack. 
 
 ![AQuack](workshop-images/aquack.jpg)
+
 She is the Pirate Duck Admiral. She wants to chat in real-time with the other pirate ducks on rafts distributed around the world - in realtime. And she wants it now.
  
 The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.io, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better use PubNub, with it's globally distributed endpoints and solid uptime.
