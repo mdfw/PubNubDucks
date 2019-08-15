@@ -254,10 +254,10 @@ At this point, if someone published a message using your publish and subscribe k
 
 But, if you click on one of the buttons or tried to send a custom message, nothing will happen. We need to set up sending. 
 
-## Sending a mesage to PubNub
+## Sending a message to PubNub
 Receiving messages from others is interesting, but Ducks want to participate. The buttons and custom field to send messages are there now because we've made a subscribe connection. They just do not do anything because we do not have a sending function.
 
-In `index.js` there are two functions that send chat meesages, `handleCustomTextMessageSend()` and `handleButtonClick()`. These gather the chat message and send it to a function called `sendMessageToPubNub()`. Let's add that.
+In `index.js` there are two functions that send chat messages, `handleCustomTextMessageSend()` and `handleButtonClick()`. These gather the chat message and send it to a function called `sendMessageToPubNub()`. Let's add that.
 
 _Replace:_
 ```javascript
