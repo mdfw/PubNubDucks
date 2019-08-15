@@ -4,7 +4,7 @@ This is AQuack.
 
 She is the Pirate Duck Admiral. She wants to chat in real-time with the other pirate ducks on rafts distributed around the world - in realtime. And she wants it now.
  
-The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.io, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better to use [PubNub](https://www.pubnub.com?devrel_gh=pubnubducks_basic), with it's [globally distributed endpoints](https://www.pubnub.com/developers/tech/network-infrastructure/?devrel_gh=pubnubducks_basic) and solid uptime.
+The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.IO, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better to use [PubNub](https://www.pubnub.com?devrel_gh=pubnubducks_basic), with it's [globally distributed endpoints](https://www.pubnub.com/developers/tech/network-infrastructure/?devrel_gh=pubnubducks_basic) and solid uptime.
 
 ## The requirements:
 * Each session will be psuedo-anonymous, pirate ducks do not want to be identified.
