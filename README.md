@@ -50,16 +50,20 @@ In addition to all of that, there is an "After Publish" PubNub function that lis
     <img alt="PubNub Signup" src="https://i.imgur.com/og5DDjf.png" width=260 height=97/>
 </a>
 
-2. Install the `Publish key` and `Subscribe key` from the administration interface into the `pubnub-keys.js` files as `PUBNUB_PUBLISH_K` and `PUBNUB_SUBSCRIBE_K`.
+2. Create a new App or use one that is created for you when you sign up.
+
+3. Install the `Publish key` and `Subscribe key` from the administration interface into the `pubnub-keys.js` files as `PUBNUB_PUBLISH_K` and `PUBNUB_SUBSCRIBE_K`.
 <img src="readme_images/publish_and_subscribe_keys.png">
 
-3. Optional: Follow the instructions in `PubNubFunctions/filter-and-translate/README.md` to install the pirate duck text chat filter and translation "before publish" PubNub Function.
+3. Turn on Presence, Storage & Playback and PubNub Functions in the admin portal. (Keys -> (name of your application) -> Application add-ons) *Remember to Save Changes in the lower right corner.*
 
-4. Optional: Follow the instructions in `PubNubFunctions/duck-dance/README.md` to install the pirate duck dance "after publish" PubNub Function.
+4. Optional: Follow the instructions in `PubNubFunctions/filter-and-translate/README.md` to install the pirate duck text chat filter and translation "before publish" PubNub Function.
 
-5. Optional: Follow the instructions in `PubNubFunctions/duck-bots/README.md` to install the pirate duck bots "after publish" PubNub Function.
+5. Optional: Follow the instructions in `PubNubFunctions/duck-dance/README.md` to install the pirate duck dance "after publish" PubNub Function.
 
-6. Have fun.
+6. Optional: Follow the instructions in `PubNubFunctions/duck-bots/README.md` to install the pirate duck bots "after publish" PubNub Function.
+
+7. Have fun.
 
 ## Credits
 Pirate Duck Chat is maintained by Mark Williams
