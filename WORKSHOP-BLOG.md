@@ -1,6 +1,6 @@
-This is AQuack. 
+This is A'Quack. 
 
-![AQuack](workshop-images/aquack.jpg)
+![A'Quack](workshop-images/aquack.jpg)
 
 She is the Pirate Duck Admiral. She wants to chat in real-time with the other pirate ducks on rafts distributed around the world - in realtime. And she wants it now.
  
