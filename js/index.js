@@ -184,8 +184,8 @@ function requestHistory() {
 }
 
 /**
- * Process a presense event sent by PubNub. Normally happens when an entity joins or leaves
- *   a subscribed channel. There is some effeciency logic that affects what UUIDs are sent. 
+ * Process a presence event sent by PubNub. Normally happens when an entity joins or leaves
+ *   a subscribed channel. There is some efficiency logic that affects what UUIDs are sent. 
  *   This demo does not list currrently connected UUIDs so that information is not processed.
  * @param {*} message 
  */
@@ -198,7 +198,7 @@ function processPresenceEvent(message) {
 }
 
 /**
- * Process recieved messages. First, log the message, then send to appropriate UI handlers.
+ * Process received messages. First, log the message, then send to appropriate UI handlers.
  * @param {*} envelope 
  */
 function processReceivedMessage(envelope) {
@@ -216,7 +216,7 @@ function processReceivedMessage(envelope) {
 /* --- Sending messages --- */
 
 /**
- * Send a message based on a butotn press. The data to send is stored as attributes on 
+ * Send a message based on a button press. The data to send is stored as attributes on 
  *   each button (makes the demo easier).
  * @param {*} e 
  */
@@ -251,7 +251,7 @@ function handleCustomColorMessageSend(e) {
 }
 
 /**
- * Send a message to pubnub. Takes the channel, contentKey and content.
+ * Send a message to PubNub. Takes the channel, contentKey and content.
  * @param {*} channelName 
  * @param {*} contentKey 
  * @param {*} content 
@@ -319,6 +319,9 @@ function hideChangeInterface() {
  * @param {*} duckCount 
  */
 function updateConnectedDuckCount(duckCount) {
+    if (USE_CLOUD_DUCK_BOTS) {
+        duckCount = duckCount + CLOUD_DUCK_BOT_COUNT;
+    }
     if (duckCount === 1) {
         updateDuckMetaConnectedDucks(duckCount + " connected duck (that's probably you).");
     } else if (duckCount > -1) {
@@ -391,7 +394,7 @@ function updateDuckMetaColor(color, publisher, timetoken) {
 }
 
 /**
- * Update the duck's speech. Then calls updateDuckMetaTalk
+ * Update the duck's speech. Then calls updateDuckMetaTalk.
  * @param {*} speech 
  * @param {*} publisher 
  * @param {*} timetoken 
@@ -490,7 +493,7 @@ function updateChatHistory(messages) {
         let timetoken = element.timetoken;
         if (timetoken) {
             let timed = new Date((timetoken/10000000)*1000);
-            duckSpeechWhen.innerHTML = timed.toLocaleTimeString();
+            duckSpeechWhen.innerHTML = timed.toLocaleString();
         } else {
             duckSpeechWhen.innerHTML = "";
         }
@@ -583,8 +586,8 @@ function hideLogOverlay () {
 let cloudDuckInterval = null;
 function startCloudDucks () {
     cloudDuckInterval = setInterval(function() {
-        sendMessageToPubNub ("bots.ducks", "send:", "now" );
-    }, 30000);
+        sendMessageToPubNub (CHANNEL_NAME_DUCK_BOTS, "send:", "now" );
+    }, CLOUD_DUCK_PING_INTERVAL);
 }
 
 /**
