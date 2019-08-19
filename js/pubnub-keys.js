@@ -1,8 +1,8 @@
 /**
  * The keys to interact with the PubNub API. Receive them by signing up at https://pubnub.com
  */
-const PUBNUB_PUBLISH_K = "pub-c-d9bf9d00-f741-4c61-b93f-7515d30719dc";
-const PUBNUB_SUBSCRIBE_K = "sub-c-95c7247c-9117-11e9-90d9-8a9dabba299e";
+const PUBNUB_PUBLISH_K = "pub-c-6ca085af-f8aa-403e-b48f-ae61b4d4aac4";
+const PUBNUB_SUBSCRIBE_K = "sub-c-6ad2300c-c2ce-11e9-9d00-8a58a5558306";
 
 const CHANNEL_KEY_TEXT = "text"; // The json key that all text on the CHANNEL_NAME_TALK is sent and recieved on.
 const CHANNEL_KEY_COLOR = "color"; // The json key that all colors on the CHANNEL_NAME_COLOR are sent and recieved on.
