@@ -25,7 +25,7 @@ $(document).ready(function(){
     /** 
      * Use a PubNub function to simulate extra ducks if needed. Function can be found in PubNubFunctions/duck-bots
      */
-    if (USE_DUCK_BOTS) {
+    if (USE_CLOUD_DUCK_BOTS) {
         startCloudDucks();
     }
 
