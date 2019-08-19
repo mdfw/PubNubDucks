@@ -4,19 +4,22 @@ This is AQuack.
 
 She is the Pirate Duck Admiral. She wants to chat in real-time with the other pirate ducks on rafts distributed around the world - in realtime. And she wants it now.
  
-The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.IO, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better to use [PubNub](https://www.pubnub.com?devrel_gh=pubnubducks_basic), with it's [globally distributed endpoints](https://www.pubnub.com/developers/tech/network-infrastructure/?devrel_gh=pubnubducks_basic) and solid uptime.
+The head Pirate Duck software engineer knows they could build a chat server with Websockets or Socket.IO, but will it scale to the massive numbers of ducks based in all corners of the globe? How many engineers will they have to dedicate to building and maintaining the backend? Pirate Ducks do not invest in large IT teams so it seems better to use [PubNub](https://www.pubnub.com?devrel_gh=pubnubducks_basic), with its [globally distributed endpoints](https://www.pubnub.com/developers/tech/network-infrastructure/?devrel_gh=pubnubducks_basic) and solid uptime.
 
 ## The requirements:
 * Each session will be psuedo-anonymous, pirate ducks do not want to be identified.
-* Pirate ducks should, by default, only have 3 or 4 messages on buttons. Typing with palmate feet and bills is difficult. 
+* Pirate ducks should, by default, only have 3 or 4 message buttons. Typing with palmate feet and bills is difficult. 
     * Allow a separate text input area for those ducks that need it and are patient with their typing.
 * Only the most recent message should display. Pirate ducks have good memories.
 
+### Live Demo
+See the full, final <a href="https://mdfw.github.io/PubNubDucks/" target="_blank" rel="noopener noreferrer">PubNub Pirate Duck Chat Demo live here</a>.
+
 ## Prerequisites
-The only prerequisite knowledge is a general familiarity with Javascript, HTML and CSS. For tools, you will need a code editor, Git to clone the starter repository, and a reasonably modern browser.
+The only prerequisite knowledge is a general familiarity with *Javascript, HTML and CSS*. For tools, you will need a code editor, Git to clone the starter repository, and a reasonably modern web browser.
 
 ## Get the base code
-For this workshop, the HTML, CSS and non-PubNub specific Javascript code are already in the repository.  Clone the code at [https://github.com/mdfw/pubnubducks](https://github.com/mdfw/pubnubducks) *and* checkout the [`workshop-basic-chat`](https://github.com/mdfw/PubNubDucks/tree/workshop-basic-chat) branch. 
+For this workshop, the HTML, CSS and non-PubNub specific JavaScript code are already in the repository.  Clone the code at [https://github.com/mdfw/pubnubducks](https://github.com/mdfw/pubnubducks) *and* checkout the [`workshop-basic-chat`](https://github.com/mdfw/PubNubDucks/tree/workshop-basic-chat) branch. 
 
 ```bash
 git clone git@github.com:mdfw/PubNubDucks.git
@@ -31,7 +34,7 @@ If you've checked out the `workshop-basic-chat` branch, open `index.html` in you
 
 > This workshop is based on a demo built for use at trade shows. 
 
-## A quick look at the HTML
+## A Quick Look at the HTML
 Opening the `index.html` file, you will find a few things:
 
 * The duck image is an inline SVG. That will become important in a future workshop chapter.
@@ -43,9 +46,9 @@ Opening the `index.html` file, you will find a few things:
     * pubnub-keys.js - holds the keys used in the application (see below)
     * index.js - the main code.
 
-## Signing up for PubNub and setting keys
+## Signing up for PubNub and Setting API Kyes
 
-To make our chat interactive, we will need [PubNub keys](https://www.pubnub.com/developers/tech/admin-dashboard/keys-object?devrel_gh=pubnubducks_basic). PubNub is free for up to 1 million messages a month and does not require a credit card at sign up. 
+To make our chat interactive, we will need [PubNub keys](https://www.pubnub.com/developers/tech/admin-dashboard/keys-object?devrel_gh=pubnubducks_basic). PubNub is *free* for up to 1 million messages a month and does not require a credit card at sign up. 
 
 <a href="https://dashboard.pubnub.com/signup?devrel_gh=pubnubducks_basic">
     <img alt="PubNub Signup" src="https://i.imgur.com/og5DDjf.png" width=260 height=97/>
@@ -55,7 +58,7 @@ Once signed up, get the subscribe and publish keys. Click the project created fo
 
 ![demo keyset](workshop-images/demo-keyset.png)
 
-We won't be using the Secret Key in this workshop. Use the Secret Key when adding authentication using the [PubNub Access Module](https://www.pubnub.com/developers/tech/security/access-manager/).
+We won't be using the Secret Key in this workshop. Use the Secret Key when adding authentication using the [PubNub Access Manager](https://www.pubnub.com/developers/tech/security/access-manager/).
 
 Open `js/pubnub-keys.js` and make the following replacements:
 
@@ -109,9 +112,9 @@ The `PUBNUB_SUBSCRIBE_K` and `PUBNUB_PUBLISH_K` should be the same variable name
 If you reload the browser, nothing will have changed. We need to add a listener.
 ![Boring screen](workshop-images/basic-chat-no-code.png)
 
-> It is possible to publish a message to the PubNub service for other subscribers to receive without setting up listeners or subscribing. Publishing and subscribing are [separate activities](https://www.pubnub.com/developers/tech/key-concepts/publish-subscribe/?devrel_gh=pubnubducks_basic) that are not necessarily intertwined. In fact, in a future chapter of our workshop, we will allow an IoT device to *only* subscribe to a channel and another device to *only* publish to a channel. However, for our chat demo, we want to have both. So, we do not show the publishing functions until we've connected to PubNub and subscribed to the right channel.
+> It is possible to publish a message to the PubNub network for other subscribers to receive without setting up listeners or subscribing. Publishing and subscribing are [separate activities](https://www.pubnub.com/developers/tech/key-concepts/publish-subscribe/?devrel_gh=pubnubducks_basic) that are not necessarily intertwined. In fact, in a future chapter of our workshop, we will allow an IoT device to *only* subscribe to a channel and another device to *only* publish to a channel. However, for our chat demo, we want to have both. So, we do not show the publishing functions until we've connected to PubNub and subscribed to the right channel.
 
-## Add a listener
+## Add a Listener
 When a duck in our pirate duck network sends a message to a channel we have subscribed to, PubNub will push that to us. We need to handle that message and any [network status events](https://www.pubnub.com/docs/web-javascript/pubnub-network-lifecycle?devrel_gh=pubnubducks_basic). We will add a listener object to manage that for us.
 
 _Replace:_ 
@@ -145,7 +148,7 @@ Next we need to add the actual functions that will handle the status and message
 
 > If you see `Suscribe to channels` in the code after the addListener section, don't worry, we will come back to subscribing in a minute.
 
-## Handle status events
+## Handle Status Events
 Our listener calls `processStatusEvent()`, so we should add that.
 
 _Replace:_ 
@@ -202,7 +205,7 @@ Taking this line by line:
 * `"text": "Messier 11 and strait on 'til morning."`: The `"message"` object is the object that gets published by a publisher and wrapped by PubNub. The keys within the object are developer defined, not enforced by PubNub. In this case, the object includes the `"text"` field which matches to `CHANNEL_KEY_TEXT` from `js/pubnub-keys.js`.
 * `"duckName": "Dred Duck Jada"`: The name of the duck that published this item. As you will see in a minute, we add that to the published message. _This is not best practice. How to attach names to content requires thought and is out of scope of this workshop._ Since our content is attached to psuedo-anonymous duck names that won't change, we can attach the name to the message object. Maps to the `CHANNEL_KEY_DUCKNAME` in `js/pubnub-keys.js`.
 
-### Processing a message
+### Processing a Message
 Now that we know what a message might contain, we can write code to process it.
 
 _Replace:_
@@ -254,7 +257,7 @@ At this point, if someone published a message using your publish and subscribe k
 
 But, if you click on one of the buttons or tried to send a custom message, nothing will happen. We need to set up sending. 
 
-## Sending a message to PubNub
+## Sending a Message Over the PubNub Network
 Receiving messages from others is interesting, but Ducks want to participate. The buttons and custom field to send messages are there now because we've made a subscribe connection. They just do not do anything because we do not have a sending function.
 
 In `index.js` there are two functions that send chat messages, `handleCustomTextMessageSend()` and `handleButtonClick()`. These gather the chat message and send it to a function called `sendMessageToPubNub()`. Let's add that.
