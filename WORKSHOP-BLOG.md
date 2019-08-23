@@ -1,3 +1,5 @@
+*Note: This is a copy of the [official blog post](https://www.pubnub.com/blog/building-a-basic-chat-pirate-ducks/?devrel_gh=pubnubducks_basic).*
+
 This is A'Quack. 
 
 ![A'Quack](workshop-images/aquack.jpg)
@@ -58,7 +60,7 @@ Once signed up, get the subscribe and publish keys. Click the project created fo
 
 ![demo keyset](workshop-images/demo-keyset.png)
 
-We won't be using the Secret Key in this workshop. Use the Secret Key when adding authentication using the [PubNub Access Manager](https://www.pubnub.com/developers/tech/security/access-manager/).
+We won't be using the Secret Key in this workshop. Use the Secret Key when adding authentication using the [PubNub Access Manager](https://www.pubnub.com/developers/tech/security/access-manager/) on a secure server you control. Never use the Secret Key on a client.
 
 Open `js/pubnub-keys.js` and make the following replacements:
 
@@ -68,7 +70,7 @@ Open `js/pubnub-keys.js` and make the following replacements:
 
 Save and close. We will come back to the other keys in this file later. 
 
-## Connecting to PubNub
+## Create a PubNub Object
 Open `js/index.js`.
 
 The code that updates the UI and reacts to clicks is included, but most of the PubNub specific code is not there. That's what we'll do below.
@@ -91,7 +93,7 @@ _Replace_:
 _with:_ 
 ```javascript
     /**
-     * Sets up a connection to the PubNub service. 
+     * Sets up an object to manage the connection to the PubNub service. 
      * Get publish and subscribe keys by signing up for the PubNub service (http://pubnub.com)
      * ssl - defaults to true, but we'll be specific here.
      * uuid - This is the identifier used by presence and publish systems to identify this unit.

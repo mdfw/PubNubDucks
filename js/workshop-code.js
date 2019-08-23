@@ -5,8 +5,8 @@
      */
 // ++ With:
     /**
-     * Sets up a connection to the PubNub service. 
-     * Keys are aquired by signing up for the PubNub service (http://pubnub.com)
+     * Sets up an object to manage the connection to the PubNub service. 
+     * Get publish and subscribe keys by signing up for the PubNub service (http://pubnub.com)
      * ssl - defaults to true, but we'll be specific here.
      * uuid - This is the identifier used by presence and publish systems to identify this unit.
      *        For this demo, we will use our randomly generated duck name. However, PubNub best 
