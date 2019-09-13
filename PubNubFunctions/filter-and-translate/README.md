@@ -11,9 +11,9 @@ A demonstration [PubNub "before publish or fire" function](https://www.pubnub.co
 2. Select your application.
 3. Create a Module (could be called "ducks", but it does not affect functionality) if it does not exist otherwise.
 4. Create a Function. 
-    * Function name: _you can choose, I called it "Pre-filter messages"
+    * Function name: you can choose, I called it "Pre-filter messages"
     * Event Type: `"Before Publish or Fire"`
-    * Channel name: `ducks.talk` - note that this should match the prefix for the key `CHANNEL_NAME_TALK` in `pubnub-keys.js`. 
+    * Channel name: `ducks.talk` - note that this should match the prefix for the key `CHANNEL_NAME_TALK` in `js/pubnub-keys.js`. 
 5. Click create to create the function.
 6. Paste in the code from function-prefilter.js into the editor.
 7. Click Save on the left.
