@@ -416,6 +416,7 @@ function updateDuckTalk(speech, publisher, timetoken) {
         duckSpeechWhen.innerHTML = "";
     }
     updateDuckMetaTalk(speech, publisher, timetoken);
+    notifyMe(speech, publisher);
 }
 
 /**
@@ -598,6 +599,7 @@ function stopCloudDucks () {
 }
 
 function notifyMe(speech, publisher) {
+    console.log("NotifyMe");
     // Let's check if the browser supports notifications
     if (!("Notification" in window)) {
       alert("This browser does not support system notifications");
