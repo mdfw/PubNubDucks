@@ -1,8 +1,8 @@
 In the previous chapter of the Pirate Duck saga, The Pirate Duck Admiral, A`Quack, demanded a chat room for the rafts of pirate ducks around the world. Pirate Duck IT delivered it with the help of PubNub's globally distributed realtime data network.
 
-There is a problem with the chat system as delivered. The 3rd button is always stuck sending the word "Woof!" However, the word "Woof!" is banned in the pirate duck community. No one knows exactly why, but the story (pirate ducks have many stories) is that A`Quack was once chased by a light-brown daushaund named "Earl". Regardless, Pirate Duck IT now needs to filter out the word "Woof" from all chat traffic.
+There is a problem with the chat system as delivered. The 3rd button is always stuck sending the word "Woof!" However, the word "Woof!" is banned in the pirate duck community. No one knows exactly why, but the story (pirate ducks have many stories) is that A`Quack was once chased by a light-brown Dachshund named "Earl". Regardless, Pirate Duck IT now needs to filter out the word "Woof" from all chat traffic.
 
-In addition, A`Quack has demanded that all chat messages get translated into Morse Code. She won't say why or what she wants to do with it, but jsut that every message be delivered with a morse code payload.
+In addition, A`Quack has demanded that all chat messages get translated into Morse Code. She won't say why or what she wants to do with it, but every message be delivered with a morse code payload.
 
 ## The requirements
 
@@ -71,9 +71,9 @@ If you click the "Woof!" button, the message is sent to PubNub and sent back to 
 We need to add our filter and translation function.
 
 ## Installing a function
-1. Visit the [PubNub adminstration](https://admin.pubnub.com) screen (log in if necessary) and click the "Functions" button on the left.
+1. Visit the [PubNub administration](https://admin.pubnub.com?devrel_gh=pubnubducks_filter) screen (log in if necessary) and click the "Functions" button on the left.
 2. Select your application (probably called "Demo Application").
-3. Create a Module (could be called "ducks", but it does not affect functionality) if it does not exist otherwise.
+3. Create a Module if it does not exist otherwise. I called it "duck chat" but the name is there for your information, it does not affect functionality.
 4. Create a Function. 
     * Function name: you can choose, I called it "Pre-filter messages"
     * Event Type: `"Before Publish or Fire"`
@@ -89,7 +89,9 @@ We need to add our filter and translation function.
 If any of the `CHANNEL_NAME_…` keys are changed in `pubnub-keys.js`, the same changes should be made to the keys in this function.
 
 ## A look at the code
-All PubNub function code should export only one default function. The one below first calls our filter function, then calls the translate function and returns the result as a promise. 
+All PubNub function code should export only one default function. The one in the code block below:
+1. Calls the `filter` function
+2. Calls the `translate` function and returns the `result` as a promise. 
 
 Since this is a `"Before Publish or Fire"` function, we receive the `request` object before it is delivered to the subscribers. Because of that, we modify the request before we return it. Other function types have other output requirements. 
 ```
@@ -100,7 +102,7 @@ export default (request) => {
 };
 ```
 ### Bad word filter
-Our filter function is one that *should not be used in production*. It only looks for the first instance of `woof` and changes it to `quack`. For more sophisticated options, look in our [Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog). Options include: [A basic word filter](https://www.pubnub.com/docs/blocks-catalog/chat-message-profanity-filter) or a third party solution by [Sift Ninja](https://www.pubnub.com/docs/blocks-catalog/siftninja)
+Our filter function is one that *should not be used in production*. It only looks for the first instance of `woof` and changes it to `quack`. For more sophisticated options, look in our [Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter). Options include: [A basic word filter](https://www.pubnub.com/docs/blocks-catalog/chat-message-profanity-filter?devrel_gh=pubnubducks_filter) or a third party solution by [Sift Ninja](https://www.pubnub.com/docs/blocks-catalog/siftninja?devrel_gh=pubnubducks_filter)
 
 One thing to note, if we modify the request to quack, we add another key/value pair to our request object. The `note` key says that we've modified this message. In a non-demo application, you would probably want just a key that your user interface could interpret into the correct language for the user.
 ```
@@ -115,7 +117,7 @@ One thing to note, if we modify the request to quack, we add another key/value p
         resolve(request);
 ```
 ### Translate to morse code
-After filtering for `woof`, we then want to translate into morse code. To do that, we select the text out of the request object (already modified by our naughty word filter) and send it through a basic translator that was found on [Stack Overflow](https://stackoverflow.com/a/26059399/1134731).
+After filtering for `woof`, we then want to translate into morse code. To do that, we select the text out of the request object (already modified by our naughty word filter) and send it through a morse code translator that was found on [Stack Overflow](https://stackoverflow.com/a/26059399/1134731).
 
 ```
 // alphabet not copied into excerpt.
@@ -134,12 +136,12 @@ let translate = function(request) {
     });
 }
 ```
-At the end of the function we attach the morse code to another key on our message JSON object (`request.message.morse) and resolve the request. 
+At the end of the function we attach the morse code to another key on our `message` JSON object (`request.message.morse`) and resolve the `request`. 
 
-Again, this is a fairly simple and straitforward translation from English to Morse code. For more sophisticated machine translation of language, you will want to use the xhr capability to call out from the PubNub serverless function to a more capable tool. We have standard blocks for translation service from [AWS](https://www.pubnub.com/docs/blocks-catalog/amazon-translate), [IBM Watson](https://www.pubnub.com/docs/blocks-catalog/multilingual-chat), [Microsoft](https://www.pubnub.com/docs/blocks-catalog/microsoft-translator-v3), and [SDL](https://www.pubnub.com/docs/blocks-catalog/sdl).
+This is a fairly simple translation from English to Morse code. For more sophisticated machine translation of language, you will want to use the [`xhr`](https://www.pubnub.com/docs/blocks/xhr-module?devrel_gh=pubnubducks_filter) capability to call out from the PubNub serverless function to a more capable tool. There are multiple options in the [PubNub Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter?devrel_gh=pubnubducks_filter) for translation service from [AWS](https://www.pubnub.com/docs/blocks-catalog/amazon-translate?devrel_gh=pubnubducks_filter), [IBM Watson](https://www.pubnub.com/docs/blocks-catalog/multilingual-chat), [Microsoft](https://www.pubnub.com/docs/blocks-catalog/microsoft-translator-v?devrel_gh=pubnubducks_filter3), and [SDL](https://www.pubnub.com/docs/blocks-catalog/sdl?devrel_gh=pubnubducks_filter).
 
 ## Finally
-A\`Quack is pleased with the filtering of `woof`. She thinks she never has to see that word in chat again. We know that the filter isn't perfect, don't we? But with PubNub Functions, it allows us to swap out the code without having to have ducks reload thier app. If ducks get more sophisticated and work around our block (or use that other word that no ones speaks of -- shudder), we can counteract. 
+A\`Quack is pleased with the filtering of `woof`. She thinks she never has to see that word in chat again. We know that the filter isn't perfect, don't we? But [PubNub Functions](https://www.pubnub.com/blog/pubnub-functions-crash-course/?devrel_gh=pubnubducks_filter) allow us to swap out the code without having to have ducks reload their app. If ducks get more sophisticated and work around our block (or use that *other* word that no ones speaks of - _shudder_), we can counteract. 
 
 Finally, consider that we were able to meet the requirements of the duck admiral without ever having to touch our original code. It will be interesting to see how the morse code translation is used. Stay tuned.
 
