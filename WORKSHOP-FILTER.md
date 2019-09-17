@@ -1,8 +1,8 @@
-In the previous chapter of the Pirate Duck saga, The Pirate Duck Admiral, A`Quack, demanded a chat room for the rafts of pirate ducks around the world. Pirate Duck IT delivered it with the help of PubNub's globally distributed realtime data network.
+In the previous chapter of the Pirate Duck saga, the Pirate Duck Admiral, A`Quack, demanded a chat room for the rafts of pirate ducks around the world. Pirate Duck IT delivered it with the help of PubNub's globally distributed realtime data network.
 
-There is a problem with the chat system as delivered. The 3rd button is always stuck sending the word "Woof!" However, the word "Woof!" is banned in the pirate duck community. No one knows exactly why, but the story (pirate ducks have many stories) is that A`Quack was once chased by a light-brown Dachshund named "Earl". Regardless, Pirate Duck IT now needs to filter out the word "Woof" from all chat traffic.
+However, there is a problem with the chat system as delivered. The 3rd button is always stuck sending the word "Woof!" Sadly, the word "Woof!" is banned in the pirate duck community. No one knows exactly why, but the story (pirate ducks have many stories) is that A`Quack was once chased by a light-brown Dachshund named "Earl". Regardless, Pirate Duck IT now needs to filter out the word "Woof" from all chat traffic. Since the app is distributed around the world, redeployed the client is challenging.
 
-In addition, A`Quack has demanded that all chat messages get translated into Morse Code. She won't say why or what she wants to do with it, but every message be delivered with a morse code payload.
+In addition, A`Quack has demanded that all chat messages get translated into Morse Code. She won't say why or what she wants to do with it, but every message *must* be delivered with a morse code payload.
 
 ## The requirements
 
@@ -10,7 +10,7 @@ In addition, A`Quack has demanded that all chat messages get translated into Mor
 * Translate every message into morse code and deliver it as part of the message payload.
 
 ## PubNub Functions
-Luckily, PubNub has an option to install serverless functions that can operate on and transform messages as they pass through the PubNub infrastructure. 
+Luckily, PubNub has an option to install code in a serverless environment that can operate on and transform messages as they pass through the PubNub infrastructure. 
 
 ![PubNub Functions](workshop-images/pubnub-functions.gif)
 
