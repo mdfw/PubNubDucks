@@ -2,7 +2,7 @@ In the previous chapter of the Pirate Duck saga, the Pirate Duck Admiral, A`Quac
 
 However, there is a problem with the chat system as delivered. The 3rd button is always stuck sending the word "Woof!" Sadly, the word "Woof!" is banned in the pirate duck community. No one knows exactly why, but the story (pirate ducks have many stories) is that A`Quack was once chased by a light-brown Dachshund named "Earl". Regardless, Pirate Duck IT now needs to filter out the word "Woof" from all chat traffic. Since the app is distributed around the world, redeployed the client is challenging.
 
-In addition, A`Quack has demanded that all chat messages get translated into Morse Code. She won't say why or what she wants to do with it, but every message *must* be delivered with a morse code payload.
+In addition, A`Quack has demanded that all chat messages get translated into Morse Code. She won't say why or what she wants to do with it, but every message needs to be translated and delivered with a morse code payload.
 
 ## The requirements
 
@@ -10,7 +10,7 @@ In addition, A`Quack has demanded that all chat messages get translated into Mor
 * Translate every message into morse code and deliver it as part of the message payload.
 
 ## PubNub Functions
-Luckily, PubNub has an option to install code in a serverless environment that can operate on and transform messages as they pass through the PubNub infrastructure. 
+Luckily, PubNub has an option to install code in a serverless environment that can operate on and transform messages as they pass through the PubNub data stream network. 
 
 ![PubNub Functions](workshop-images/pubnub-functions.gif)
 
@@ -64,7 +64,7 @@ Open `js/pubnub-keys.js` and make the following replacements:
 Save and close. We will come back to the other keys in this file later. 
 
 ## Working demo
-At this point, if you open `index.html` in your browser you should seen buttons to send messages after your browser connects to the PubNub service. If not, make sure you have the right keys set and check the javascript console in your browser for errors.
+At this point, if you open `index.html` in your browser you should see buttons to send messages after your browser connects to PubNub. If not, make sure you have the right keys set and check the javascript console in your browser for errors.
 
 If you click the "Woof!" button, the message is sent to PubNub and sent back to your browser because of the subscription to the `ducks.talk` channel. But, we need to filter out that terrible word and translate everything into morse code.
 
@@ -93,7 +93,7 @@ All PubNub function code should export only one default function. The one in the
 1. Calls the `filter` function
 2. Calls the `translate` function and returns the `result` as a promise. 
 
-Since this is a `"Before Publish or Fire"` function, we receive the `request` object before it is delivered to the subscribers. Because of that, we modify the request before we return it. Other function types have other output requirements. 
+Since this is a `"Before Publish or Fire"` function, we receive the `request` object before it is delivered to the subscribers. Because of that, we modify the `request` before we return it. Other function types have different output requirements. 
 ```
 export default (request) => {
     return filter(request).then(translate).then(function(result) {
@@ -102,7 +102,7 @@ export default (request) => {
 };
 ```
 ### Bad word filter
-Our filter function is one that *should not be used in production*. It only looks for the first instance of `woof` and changes it to `quack`. For more sophisticated options, look in our [Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter). Options include: [A basic word filter](https://www.pubnub.com/docs/blocks-catalog/chat-message-profanity-filter?devrel_gh=pubnubducks_filter) or a third party solution by [Sift Ninja](https://www.pubnub.com/docs/blocks-catalog/siftninja?devrel_gh=pubnubducks_filter)
+This filter function *should not be used in production*. It only looks for the first instance of `woof` and changes it to `quack`. For more sophisticated options, look in our [Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter). Options include: [A basic word filter](https://www.pubnub.com/docs/blocks-catalog/chat-message-profanity-filter?devrel_gh=pubnubducks_filter) or a third-party solution by [Sift Ninja](https://www.pubnub.com/docs/blocks-catalog/siftninja?devrel_gh=pubnubducks_filter)
 
 One thing to note, if we modify the request to quack, we add another key/value pair to our request object. The `note` key says that we've modified this message. In a non-demo application, you would probably want just a key that your user interface could interpret into the correct language for the user.
 ```
@@ -120,7 +120,7 @@ One thing to note, if we modify the request to quack, we add another key/value p
 After filtering for `woof`, we then want to translate into morse code. To do that, we select the text out of the request object (already modified by our naughty word filter) and send it through a morse code translator that was found on [Stack Overflow](https://stackoverflow.com/a/26059399/1134731).
 
 ```
-// alphabet not copied into excerpt.
+// Morse code alphabet not copied into this excerpt.
 let translate = function(request) {
     return new Promise(function(resolve, reject) {
         //From https://stackoverflow.com/a/26059399/1134731
@@ -136,7 +136,7 @@ let translate = function(request) {
     });
 }
 ```
-At the end of the function we attach the morse code to another key on our `message` JSON object (`request.message.morse`) and resolve the `request`. 
+At the end of the function, we attach the morse code to another key on our `message` JSON object (`request.message.morse`) and resolve the `request`. 
 
 This is a fairly simple translation from English to Morse code. For more sophisticated machine translation of language, you will want to use the [`xhr`](https://www.pubnub.com/docs/blocks/xhr-module?devrel_gh=pubnubducks_filter) capability to call out from the PubNub serverless function to a more capable tool. There are multiple options in the [PubNub Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter?devrel_gh=pubnubducks_filter) for translation service from [AWS](https://www.pubnub.com/docs/blocks-catalog/amazon-translate?devrel_gh=pubnubducks_filter), [IBM Watson](https://www.pubnub.com/docs/blocks-catalog/multilingual-chat), [Microsoft](https://www.pubnub.com/docs/blocks-catalog/microsoft-translator-v?devrel_gh=pubnubducks_filter3), and [SDL](https://www.pubnub.com/docs/blocks-catalog/sdl?devrel_gh=pubnubducks_filter).
 
