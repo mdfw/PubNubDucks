@@ -19,7 +19,7 @@ This branch is the workshop version for a simple chat. See master branch for the
 2. Install the `Publish key` and `Subscribe key` from the administration interface into the `pubnub-keys.js` files as `PUBNUB_PUBLISH_K` and `PUBNUB_SUBSCRIBE_K`.
 <img src="readme_images/publish_and_subscribe_keys.png">
 
-3. Follow the [workshop post](https://github.com/mdfw/PubNubDucks/blob/workshop-easy-filter/README-WORKSHOP.md).
+3. Follow the [workshop post](https://github.com/mdfw/PubNubDucks/blob/workshop-basic-chat/README-WORKSHOP.md).
 
 ## Credits
 Pirate Duck Chat is maintained by Mark Williams
