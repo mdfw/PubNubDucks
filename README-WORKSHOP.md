@@ -10,7 +10,7 @@ In addition, A`Quack has demanded that all chat messages get translated into Mor
 * Translate every message into morse code and deliver it as part of the message payload.
 
 ## PubNub Functions
-Luckily, PubNub has an option to install code in a serverless environment that can operate on and transform messages as they pass through the PubNub data stream network. 
+Luckily, PubNub has an option to install code in a serverless environment that can operate on and transform messages as they pass through the PubNub Data Stream Network. 
 
 ![PubNub Functions](workshop-images/pubnub-functions.gif)
 
@@ -24,12 +24,12 @@ There are [four different types](https://www.pubnub.com/docs/blocks/function-typ
 For the requirements as listed, the "Before Publish" is the best choice.
 
 ## Prerequisites
-The only prerequisite knowledge is a general familiarity with Javascript. For tools, you will need Git to clone the starter repository and a reasonably modern browser.
+The only prerequisite knowledge is a general familiarity with JavaScript. For tools, you will need Git to clone the starter repository and a reasonably modern browser.
 
 It will be helpful to go through the Basic Chat Tutorial. The starter code below begins at the completion of that workshop.
 
 ## Get the base code
-For this workshop, the HTML, CSS and non-PubNub specific Javascript code are already in the repository.  Clone the code at [https://github.com/mdfw/pubnubducks](https://github.com/mdfw/pubnubducks) *and* checkout the [`workshop-easy-filter`](https://github.com/mdfw/PubNubDucks/tree/workshop-easy-filter) branch. 
+For this workshop, the HTML, CSS and non-PubNub specific JavaScript code are already in the repository.  Clone the code at [https://github.com/mdfw/pubnubducks](https://github.com/mdfw/pubnubducks) *and* checkout the [`workshop-easy-filter`](https://github.com/mdfw/PubNubDucks/tree/workshop-easy-filter) branch. 
 
 ```bash
 git clone git@github.com:mdfw/PubNubDucks.git
@@ -64,9 +64,9 @@ Open `js/pubnub-keys.js` and make the following replacements:
 Save and close. We will come back to the other keys in this file later. 
 
 ## Working demo
-At this point, if you open `index.html` in your browser you should see buttons to send messages after your browser connects to PubNub. If not, make sure you have the right keys set and check the javascript console in your browser for errors.
+At this point, if you open `index.html` in your browser you should see buttons to send messages after your browser connects to PubNub. If not, make sure you have the right keys set and check the JavaScript console in your browser for errors.
 
-If you click the "Woof!" button, the message is sent to PubNub and sent back to your browser because of the subscription to the `ducks.talk` channel. But, we need to filter out that terrible word and translate everything into morse code.
+If you click the "Woof!" button, the message is sent to PubNub and sent back to your browser because of the subscription to the `ducks.talk` channel. But, we need to filter out that terrible word "woof" and translate everything into morse code.
 
 We need to add our filter and translation function.
 
@@ -102,7 +102,7 @@ export default (request) => {
 };
 ```
 ### Bad word filter
-This filter function *should not be used in production*. It only looks for the first instance of `woof` and changes it to `quack`. For more sophisticated options, look in our [Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter). Options include: [A basic word filter](https://www.pubnub.com/docs/blocks-catalog/chat-message-profanity-filter?devrel_gh=pubnubducks_filter) or a third-party solution by [Sift Ninja](https://www.pubnub.com/docs/blocks-catalog/siftninja?devrel_gh=pubnubducks_filter)
+This filter function *should not be used in production*. It only looks for the first instance of `woof` and changes it to `quack`. For more sophisticated options, look in the PubNub [Blocks Catalog](https://www.pubnub.com/docs/blocks-catalog?devrel_gh=pubnubducks_filter). Options include: [A basic word filter](https://www.pubnub.com/docs/blocks-catalog/chat-message-profanity-filter?devrel_gh=pubnubducks_filter) or a third-party solution by [Sift Ninja](https://www.pubnub.com/docs/blocks-catalog/siftninja?devrel_gh=pubnubducks_filter)
 
 One thing to note, if we modify the request to quack, we add another key/value pair to our request object. The `note` key says that we've modified this message. In a non-demo application, you would probably want just a key that your user interface could interpret into the correct language for the user.
 ```
