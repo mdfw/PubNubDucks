@@ -8,7 +8,7 @@ PubNub Pirate Duck Demo - Easy Bad Word Filter
 </p>
 
 ## Workshop version
-This branch is the workshop version for adding a bad word filter and morse code translator with PubNub Functions to our basic chat (see https://github.com/mdfw/PubNubDucks/tree/workshop-basic-chat). See master branch for the full, working demo.
+This branch is the workshop version for adding a bad word filter and morse code translator with PubNub Functions to our basic chat (see [https://github.com/mdfw/PubNubDucks/tree/workshop-basic-chat](https://github.com/mdfw/PubNubDucks/tree/workshop-basic-chat)). See master branch for the full, working demo.
 
 ## Demo
 [Try the full demo! Let out your pirate duck.](https://mdfw.github.io/PubNubDucks/)
@@ -22,7 +22,7 @@ This branch is the workshop version for adding a bad word filter and morse code 
 2. Install the `Publish key` and `Subscribe key` from the administration interface into the `pubnub-keys.js` files as `PUBNUB_PUBLISH_K` and `PUBNUB_SUBSCRIBE_K`.
 <img src="readme_images/publish_and_subscribe_keys.png">
 
-3. Follow the [workshop post](https://github.com/mdfw/PubNubDucks/blob/workshop-easy-filter/WORKSHOP.md)
+3. Follow the instructions in [https://github.com/mdfw/PubNubDucks/blob/workshop-easy-filter/README-WORKSHOP.md](https://github.com/mdfw/PubNubDucks/blob/workshop-easy-filter/README-WORKSHOP.md)
 
 ## Credits
 Pirate Duck Chat is maintained by Mark Williams
